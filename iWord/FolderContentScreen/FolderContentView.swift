@@ -12,7 +12,7 @@ import UIKit
 import SnapKit
 
 final class FolderContentView: UIView {
-    private let listOfUnits: [LexicalUnit] = [LexicalUnit(), LexicalUnit()]
+    private var listOfUnits: [LexicalUnit] = [LexicalUnit(), LexicalUnit()]
     private let tableView = UITableView()
     override var frame: CGRect {
         didSet {
@@ -45,5 +45,16 @@ extension FolderContentView: UITableViewDelegate, UITableViewDataSource {
         let dequeuedCell = tableView.dequeueReusableCell(withIdentifier: "LU") as! LexicalUnitCell
         dequeuedCell.setLexicalUnit(listOfUnits[indexPath.row])
         return dequeuedCell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            listOfUnits.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, performPrimaryActionForRowAt indexPath: IndexPath) {
+        print("Open edit view")
     }
 }
