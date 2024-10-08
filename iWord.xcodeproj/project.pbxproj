@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4B771EDE2CB55C300010A256 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B771EDD2CB55C300010A256 /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		4B3289A72CB3D08200794936 /* iWord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B771EDE2CB55C300010A256 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = iWord;
 			packageProductDependencies = (
+				4B771EDD2CB55C300010A256 /* SnapKit */,
 			);
 			productName = iWord;
 			productReference = 4B3289A72CB3D08200794936 /* iWord.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 4B32899E2CB3D08200794936;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4B771EDC2CB55C300010A256 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4B3289A82CB3D08200794936 /* Products */;
 			projectDirPath = "";
@@ -330,6 +339,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4B771EDC2CB55C300010A256 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4B771EDD2CB55C300010A256 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B771EDC2CB55C300010A256 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4B32899F2CB3D08200794936 /* Project object */;
 }
