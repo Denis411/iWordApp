@@ -9,6 +9,7 @@
 // University website: https://tambovstateuniversity.org 
 
 import UIKit
+import SnapKit
 
 struct LexicalUnit {
     let mainTranslation: String
@@ -26,6 +27,12 @@ final class LexicalUnitCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .blue
         contentView.addSubview(mainTranslationTitle)
+        mainTranslationTitle.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
     
     required init?(coder: NSCoder) {
