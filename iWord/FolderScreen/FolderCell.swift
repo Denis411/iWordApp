@@ -15,19 +15,16 @@ struct FolderCell: View {
 
     private let editAction:   (FolderModel.Folder) -> Void
     private let deleteAction: (FolderModel.Folder) -> Void
-    private let tapAction:    (FolderModel.Folder) -> Void
     
     init(
         _ folderModel: FolderModel.Folder,
         editAction:   @escaping (FolderModel.Folder) -> Void,
-        deleteAction: @escaping (FolderModel.Folder) -> Void,
-        tapAction:    @escaping (FolderModel.Folder) -> Void
+        deleteAction: @escaping (FolderModel.Folder) -> Void
     ) {
         self.folderModel = folderModel
 
         self.editAction = editAction
         self.deleteAction = deleteAction
-        self.tapAction = tapAction
     }
     
     var body: some View {
@@ -57,9 +54,6 @@ private extension FolderCell {
             .font(.system(size: 40))
             .fontWeight(.bold)
             .padding(.horizontal, 20)
-        }
-        .onTapGesture {
-            tapAction(folderModel)
         }
     }
     
@@ -106,7 +100,6 @@ private extension FolderCell {
     FolderCell(
         model,
         editAction:  { _ in },
-        deleteAction: { _ in },
-        tapAction: { _ in }
+        deleteAction: { _ in }
     )
 }

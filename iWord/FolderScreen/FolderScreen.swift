@@ -73,10 +73,11 @@ private extension FolderScreen {
                     FolderCell(
                         folderModel,
                         editAction: editFolder,
-                        deleteAction: deleteFolder,
-                        tapAction: handleTap
+                        deleteAction: deleteFolder
                     )
-                    
+                    .onTapGesture {
+                        handleTap(folderModel)
+                    }
                 }
                 .listRowSeparator(.hidden)
                 .shadow(radius: 7)
@@ -105,7 +106,7 @@ private extension FolderScreen {
     }
     
     func handleTap(_ model: FolderModel.Folder) {
-        
+        print("Hi")
     }
 }
 
