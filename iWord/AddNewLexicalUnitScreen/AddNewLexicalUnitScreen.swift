@@ -14,6 +14,8 @@ struct AddNewLexicalUnitScreen: View {
     @State var originalLexicalUnit: String = ""
     @State var translation: String = ""
     @State var isAlertPresented = false
+    @State var isImagePickerPresented = false
+    @State var pickedImage: UIImage? = nil
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -30,7 +32,7 @@ struct AddNewLexicalUnitScreen: View {
             .cornerRadius(20)
             
             createButton(title: "AddImage") {
-                print("Hi")
+                isImagePickerPresented = true
             }
             
             Spacer()
@@ -43,6 +45,9 @@ struct AddNewLexicalUnitScreen: View {
         .padding(.horizontal, 20)
         .alert("You have to fill in all fields", isPresented: $isAlertPresented) {
             Button("Ok", role: .cancel) { }
+        }
+        .sheet(isPresented: $isImagePickerPresented) {
+            ImagePicker(image: $pickedImage)
         }
     }
     
