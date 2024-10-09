@@ -13,9 +13,11 @@ import Foundation
 struct LexicalUnit {
     let originalWord: String
     let mainTranslation: String
+    let completionPercentage: UInt8
     
     init() {
         self.originalWord = "Cat"
         self.mainTranslation = "Кот"
+        self.completionPercentage = 80
     }
 }

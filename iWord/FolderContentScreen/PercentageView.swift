@@ -38,20 +38,19 @@ final class PercentageView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
+        let edge = min(rect.width, rect.height)
         guard (percentage ?? 0) < 100 else {
             self.layer.backgroundColor = UIColor.green.cgColor
-            self.layer.cornerRadius = self.frame.width / 2
+            self.layer.cornerRadius = edge / 2
             return
         }
-        
-        let circleBackground = createBackgroundLayer(rect)
-        layer.addSublayer(circleBackground)
         
         let colorfulGradient = createColorfulGradient(rect, percentage: percentage)
         layer.addSublayer(colorfulGradient)
         
         let roundLayer = CALayer()
-        roundLayer.frame = frame.insetBy(dx: Self.lineWidth, dy: Self.lineWidth)
+        roundLayer.frame =
+        rect.insetBy(dx: Self.lineWidth, dy: Self.lineWidth)
         if let backgroundColor {
             roundLayer.backgroundColor = backgroundColor.cgColor
         } else {
@@ -97,7 +96,7 @@ final class PercentageView: UIView {
             x: bounds.size.width / 2,
             y: bounds.size.height / 2
         )
-        let arcRadius = bounds.size.height / 2
+        let arcRadius = rect.size.height / 2
         circlePath.addArc(
             withCenter: arcCenter,
             radius: arcRadius,
@@ -115,14 +114,6 @@ final class PercentageView: UIView {
     private func degreeToPi(degree: CGFloat) -> CGFloat {
         let oneDegree = 1 * CGFloat.pi / 180
         return oneDegree * degree
-    }
-    
-    private func createBackgroundLayer(_ rect: CGRect) -> CALayer {
-        let circle = CALayer()
-        circle.frame = frame
-        circle.cornerRadius = frame.width / 2
-        circle.backgroundColor = UIColor.gray.cgColor
-        return circle
     }
 }
 

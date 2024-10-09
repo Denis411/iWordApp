@@ -13,6 +13,7 @@ import SnapKit
 
 final class LexicalUnitCell: UITableViewCell {
     private(set) var lexicalUnit: LexicalUnit?
+    private let percentageView = PercentageView()
     private let originalWordLabel = UILabel()
     private let mainTranslationLabel = UILabel()
     private let verticalStack: UIStackView = {
@@ -24,6 +25,11 @@ final class LexicalUnitCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(percentageView)
+        percentageView.snp.makeConstraints { make in
+            make.top.trailing.bottom.equalToSuperview().inset(Self.percentageViewInset)
+            make.width.equalTo(Self.height - Self.percentageViewInset)
+        }
         contentView.addSubview(verticalStack)
         [originalWordLabel, mainTranslationLabel].forEach { label in
             label.font = .systemFont(ofSize: 20, weight: .medium)
@@ -69,6 +75,7 @@ final class LexicalUnitCell: UITableViewCell {
         self.lexicalUnit = lexicalUnit
         originalWordLabel.text = lexicalUnit.originalWord
         mainTranslationLabel.text = lexicalUnit.mainTranslation
+        percentageView.updatePercentage(lexicalUnit.completionPercentage)
     }
 }
 
@@ -76,4 +83,5 @@ extension LexicalUnitCell {
     static let height: CGFloat = 100
     static let spacingBetweenCells: CGFloat = 5
     static let horizontalInset: CGFloat = 20
+    static let percentageViewInset: CGFloat = 10
 }
