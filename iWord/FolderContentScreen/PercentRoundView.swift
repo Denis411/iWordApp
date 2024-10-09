@@ -44,7 +44,10 @@ final class PercentRoundView: UIView {
             return
         }
         
-        let colorfulGradient = createColorfulGradient(rect)
+        let circleBackground = createBackgroundLayer(rect)
+        layer.addSublayer(circleBackground)
+        
+        let colorfulGradient = createColorfulGradient(rect, percentage: percentage)
         layer.addSublayer(colorfulGradient)
         
         let roundLayer = CALayer()
@@ -60,7 +63,8 @@ final class PercentRoundView: UIView {
         layer.addSublayer(label.layer)
     }
     
-    private func createColorfulGradient(_ rect: CGRect) -> CAGradientLayer {
+    private func createColorfulGradient(_ rect: CGRect, percentage: UInt8?) -> CALayer {
+        // gradient
         let gradient = CAGradientLayer()
         gradient.startPoint = CGPoint(x: 0.5, y: 0.5)
         gradient.endPoint = CGPoint(x: 0.5, y: 0)
@@ -73,8 +77,44 @@ final class PercentRoundView: UIView {
             UIColor.green.cgColor
         ]
         gradient.frame = bounds
-        gradient.cornerRadius = rect.width / 2
+        guard let percentage else {
+            gradient.cornerRadius = frame.width / 2
+            return gradient
+        }
+        
+        //shape
+        let shapeLayer = CAShapeLayer()
+        let maxPercentage: CGFloat = 100
+        let currentPercentage = CGFloat(percentage)
+        let maxDegree: CGFloat = 360
+        let currentDegree = (maxDegree / maxPercentage) * currentPercentage
+        let endAngle = currentDegree
+        let circlePath = UIBezierPath()
+        let startPoint = CGPoint(x: rect.midX, y: rect.midY)
+        circlePath.move(to: startPoint)
+        
+        let arcCenter = CGPoint(
+            x: bounds.size.width / 2,
+            y: bounds.size.height / 2
+        )
+        let arcRadius = bounds.size.height / 2
+        circlePath.addArc(
+            withCenter: arcCenter,
+            radius: arcRadius,
+            startAngle: degreeToPi(degree: -90),
+            endAngle: degreeToPi(degree: endAngle - 90),
+            clockwise: true
+        )
+
+        shapeLayer.path = circlePath.cgPath
+        gradient.mask = shapeLayer
+        
         return gradient
+    }
+    
+    private func degreeToPi(degree: CGFloat) -> CGFloat {
+        let oneDegree = 1 * CGFloat.pi / 180
+        return oneDegree * degree
     }
     
     private func createBackgroundLayer(_ rect: CGRect) -> CALayer {
