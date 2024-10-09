@@ -12,7 +12,7 @@ import UIKit
 import SnapKit
 
 final class FolderContentView: UIView {
-    private var listOfUnits: [LexicalUnit] = [LexicalUnit(), LexicalUnit()]
+    private var listOfUnits: [LexicalUnit] = [LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit()]
     private let tableView = UITableView()
     override var frame: CGRect {
         didSet {
@@ -25,6 +25,8 @@ final class FolderContentView: UIView {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(LexicalUnitCell.self, forCellReuseIdentifier: "LU")
+        tableView.separatorStyle = .none
+        tableView.clipsToBounds = false
         self.addSubview(tableView)
     }
     
@@ -33,26 +35,13 @@ final class FolderContentView: UIView {
     }
 }
 
-// Sections are added for distancing between cells
 extension FolderContentView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        100
+        LexicalUnitCell.height + LexicalUnitCell.spacingBetweenCells
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        listOfUnits.count
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        5
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        UIView()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -66,6 +55,10 @@ extension FolderContentView: UITableViewDelegate, UITableViewDataSource {
             listOfUnits.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        false
     }
     
     func tableView(_ tableView: UITableView, performPrimaryActionForRowAt indexPath: IndexPath) {

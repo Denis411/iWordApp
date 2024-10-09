@@ -53,9 +53,27 @@ final class LexicalUnitCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(
+            by: .init(
+                top: 0,
+                left: Self.horizontalInset,
+                bottom: 0,
+                right: Self.horizontalInset
+            )
+        )
+    }
+    
     func setLexicalUnit(_ lexicalUnit: LexicalUnit) {
         self.lexicalUnit = lexicalUnit
         originalWordLabel.text = lexicalUnit.originalWord
         mainTranslationLabel.text = lexicalUnit.mainTranslation
     }
+}
+
+extension LexicalUnitCell {
+    static let height: CGFloat = 100
+    static let spacingBetweenCells: CGFloat = 5
+    static let horizontalInset: CGFloat = 20
 }

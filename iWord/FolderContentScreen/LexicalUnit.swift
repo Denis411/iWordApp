@@ -11,9 +11,11 @@
 import Foundation
 
 struct LexicalUnit {
+    let originalWord: String
     let mainTranslation: String
     
     init() {
-        self.mainTranslation = "Text"
+        self.originalWord = "Cat"
+        self.mainTranslation = "Кот"
     }
 }
