@@ -12,7 +12,7 @@ import UIKit
 import SnapKit
 
 /// If you do not set background color then the center of your view will be white
-final class PercentRoundView: UIView {
+final class PercentageView: UIView {
     private var percentage: UInt8?
     private let checkMarkImageView: UIImageView = {
         let checkMarkView = UIImageView()
@@ -127,7 +127,7 @@ final class PercentRoundView: UIView {
 }
 
 // MARK: - Public methods
-extension PercentRoundView {
+extension PercentageView {
     func updatePercentage(_ percentage: UInt8) {
         self.percentage = percentage
         label.text = String(percentage) + " " + "%"
@@ -151,13 +151,13 @@ extension PercentRoundView {
     }
 }
 
-extension PercentRoundView {
+extension PercentageView {
     static let lineWidth: CGFloat = 10
 }
 
 import SwiftUI
 struct PercentView: UIViewRepresentable {
-    private let percentageView = PercentRoundView()
+    private let percentageView = PercentageView()
     func makeUIView(context: Context) -> some UIView {
         percentageView
     }
