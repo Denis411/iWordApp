@@ -40,7 +40,7 @@ final class LexicalUnitCell: UITableViewCell {
         verticalStack.addArrangedSubview(mainTranslationLabel)
         verticalStack.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
-            make.trailing.equalToSuperview()
+            make.trailing.equalTo(percentageView.snp.leading).inset(20)
             make.verticalEdges.equalToSuperview().inset(20)
         }
         contentView.layer.backgroundColor = UIColor.white.cgColor
@@ -52,7 +52,6 @@ final class LexicalUnitCell: UITableViewCell {
         contentView.layer.shadowColor = UIColor.gray.cgColor
         contentView.layer.shadowRadius = 12
         contentView.layer.shadowOpacity = 0.5
-        contentView.layer.shadowOffset = .init(width: 2, height: 2)
     }
     
     required init?(coder: NSCoder) {

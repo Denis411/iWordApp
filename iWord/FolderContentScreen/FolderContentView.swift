@@ -14,6 +14,21 @@ import SnapKit
 final class FolderContentView: UIView {
     private var listOfUnits: [LexicalUnit] = [LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit()]
     private let tableView = UITableView()
+    private let addButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = FolderContentView.addButtonEdge / 2
+        button.layer.backgroundColor = UIColor.white.cgColor
+        button.layer.shadowColor = UIColor.gray.cgColor
+        button.layer.shadowOpacity = 0.5
+        button.layer.shadowRadius = 12
+        let plusImage = UIImage(
+            systemName: "plus",
+            withConfiguration: UIImage.SymbolConfiguration(font: .systemFont(ofSize: 60))
+        )
+        button.setImage(plusImage, for: .normal)
+        return button
+        
+    }()
     override var frame: CGRect {
         didSet {
             tableView.frame = self.frame
@@ -28,10 +43,21 @@ final class FolderContentView: UIView {
         tableView.separatorStyle = .none
         tableView.clipsToBounds = false
         self.addSubview(tableView)
+        self.addSubview(addButton)
+        addButton.snp.makeConstraints { make in
+            make.height.width.equalTo(Self.addButtonEdge)
+            make.trailing.bottom.equalToSuperview().inset(20)
+        }
+        addButton.addTarget(self, action: #selector(addButtonAction), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func addButtonAction() {
+        listOfUnits.append(.init())
+        tableView.reloadData()
     }
 }
 
@@ -41,7 +67,7 @@ extension FolderContentView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        listOfUnits.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,4 +90,8 @@ extension FolderContentView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, performPrimaryActionForRowAt indexPath: IndexPath) {
         print("Open edit view")
     }
+}
+
+extension FolderContentView {
+    static let addButtonEdge: CGFloat = 100
 }
