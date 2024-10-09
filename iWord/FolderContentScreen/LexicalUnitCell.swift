@@ -13,7 +13,7 @@ import SnapKit
 
 final class LexicalUnitCell: UITableViewCell {
     private(set) var lexicalUnit: LexicalUnit?
-    private let percentageView = PercentageView()
+    private let percentageView = UILabel()
     private let originalWordLabel = UILabel()
     private let mainTranslationLabel = UILabel()
     private let verticalStack: UIStackView = {
@@ -74,7 +74,7 @@ final class LexicalUnitCell: UITableViewCell {
         self.lexicalUnit = lexicalUnit
         originalWordLabel.text = lexicalUnit.originalWord
         mainTranslationLabel.text = lexicalUnit.mainTranslation
-        percentageView.updatePercentage(lexicalUnit.completionPercentage)
+        percentageView.text = String(lexicalUnit.completionPercentage) + " " + "%"
     }
 }
 
