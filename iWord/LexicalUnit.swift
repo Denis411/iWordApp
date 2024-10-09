@@ -18,6 +18,6 @@ struct LexicalUnit {
     init() {
         self.originalWord = "Cat"
         self.mainTranslation = "Кот"
-        self.completionPercentage = 80
+        self.completionPercentage = UInt8.random(in: 99...100)
     }
 }

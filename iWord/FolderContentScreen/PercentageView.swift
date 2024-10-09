@@ -31,6 +31,15 @@ final class PercentageView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.addSubview(label)
+        self.addSubview(checkMarkImageView)
+        checkMarkImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(10)
+        }
+        label.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+                .inset(Self.lineWidth * 2)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -104,7 +113,7 @@ final class PercentageView: UIView {
             endAngle: degreeToPi(degree: endAngle - 90),
             clockwise: true
         )
-
+        
         shapeLayer.path = circlePath.cgPath
         gradient.mask = shapeLayer
         
@@ -123,20 +132,8 @@ extension PercentageView {
         self.percentage = percentage
         label.text = String(percentage) + " " + "%"
         
-        if percentage >= 100 {
-            label.removeFromSuperview()
-            self.addSubview(checkMarkImageView)
-            checkMarkImageView.snp.makeConstraints { make in
-                make.edges.equalToSuperview().inset(10)
-            }
-        } else {
-            checkMarkImageView.removeFromSuperview()
-            self.addSubview(label)
-            label.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-                    .inset(Self.lineWidth * 2)
-            }
-        }
+        label.isHidden = percentage >= 100
+        checkMarkImageView.isHidden = percentage < 100
         
         self.setNeedsDisplay()
     }
