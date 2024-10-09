@@ -15,8 +15,9 @@ struct iWordApp: App {
     private let folderScreenViewModel = FolderScreenViewModel()
     var body: some Scene {
         WindowGroup {
-            FolderScreen(folderScreenViewModel: folderScreenViewModel)
-            FolderContentViewControllerRepresentable()
+//            FolderScreen(folderScreenViewModel: folderScreenViewModel)
+//            FolderContentViewControllerRepresentable()
+            AddNewLexicalUnitScreen()
         }
     }
 }
