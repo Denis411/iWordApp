@@ -12,7 +12,7 @@ import UIKit
 import SnapKit
 
 final class LexicalUnitCell: UITableViewCell {
-    private(set) var lexicalUnit: LexicalUnit?
+    private var lexicalUnit: LexicalUnit?
     private let percentageView = UILabel()
     private let originalWordLabel = UILabel()
     private let mainTranslationLabel = UILabel()
@@ -27,8 +27,8 @@ final class LexicalUnitCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(percentageView)
         percentageView.snp.makeConstraints { make in
-            make.top.trailing.bottom.equalToSuperview().inset(Self.percentageViewInset)
-            make.width.equalTo(Self.height - Self.percentageViewInset)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(20).priority(.high)
         }
         contentView.addSubview(verticalStack)
         [originalWordLabel, mainTranslationLabel].forEach { label in
@@ -40,8 +40,8 @@ final class LexicalUnitCell: UITableViewCell {
         verticalStack.addArrangedSubview(mainTranslationLabel)
         verticalStack.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
-            make.trailing.equalTo(percentageView.snp.leading).inset(20)
-            make.verticalEdges.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(100)
+            make.centerY.equalToSuperview()
         }
         contentView.layer.backgroundColor = UIColor.white.cgColor
         contentView.layer.cornerRadius = 12
@@ -82,5 +82,4 @@ extension LexicalUnitCell {
     static let height: CGFloat = 100
     static let spacingBetweenCells: CGFloat = 5
     static let horizontalInset: CGFloat = 20
-    static let percentageViewInset: CGFloat = 10
 }
