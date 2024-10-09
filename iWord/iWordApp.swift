@@ -13,11 +13,12 @@ import SwiftUI
 @main
 struct iWordApp: App {
     private let folderScreenViewModel = FolderScreenViewModel()
+    private let newLexicalUnitViewModel = NewLexicalUnitViewModel()
     var body: some Scene {
         WindowGroup {
 //            FolderScreen(folderScreenViewModel: folderScreenViewModel)
 //            FolderContentViewControllerRepresentable()
-            AddNewLexicalUnitScreen()
+            AddNewLexicalUnitScreen(viewModel: newLexicalUnitViewModel)
         }
     }
 }

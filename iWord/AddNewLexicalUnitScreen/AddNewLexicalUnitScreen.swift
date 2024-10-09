@@ -10,24 +10,41 @@
 
 import SwiftUI
 
+final class NewLexicalUnitViewModel: ObservableObject {
+    @MainActor @Published var originalLexicalUnit: String = ""
+    @MainActor @Published var translation: String = ""
+    @MainActor @Published var pickedImage: UIImage? = nil
+    
+    @MainActor func nullifyPickedImage() {
+        self.pickedImage = nil
+    }
+    
+    func saveLexicalUnit() {
+        
+    }
+    
+}
+
 struct AddNewLexicalUnitScreen: View {
-    @State var originalLexicalUnit: String = ""
-    @State var translation: String = ""
-    @State var isAlertPresented = false
     @State var isImagePickerPresented = false
-    @State var pickedImage: UIImage? = nil
+    @State var isAlertPresented = false
+    @ObservedObject private var viewModel: NewLexicalUnitViewModel
+    
+    init(viewModel: NewLexicalUnitViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 Text("Enter original word")
-                TextField(text: $originalLexicalUnit) { }
+                TextField(text: $viewModel.originalLexicalUnit) { }
                     .padding(20)
                     .background(Color.gray)
                     .cornerRadius(20)
                 
                 Text("Enter translation")
-                TextField(text: $translation) { }
+                TextField(text: $viewModel.translation) { }
                     .padding(20)
                     .background(Color.gray)
                     .cornerRadius(20)
@@ -38,11 +55,11 @@ struct AddNewLexicalUnitScreen: View {
                     }
                     
                     createButton(title: "Save") {
-                        isAlertPresented = true
+                        viewModel.saveLexicalUnit()
                     }
                 }
                 
-                if let pickedImage {
+                if let pickedImage = viewModel.pickedImage {
                     createImageView(uiImage: pickedImage)
                         .offset(y: 30)
                 }
@@ -50,11 +67,14 @@ struct AddNewLexicalUnitScreen: View {
         }
         .ignoresSafeArea(.keyboard)
         .padding(.horizontal, 20)
-        .alert("You have to fill in all fields", isPresented: $isAlertPresented) {
+        .alert(
+            "You have to fill in all fields",
+            isPresented: $isAlertPresented
+        ) {
             Button("Ok", role: .cancel) { }
         }
         .sheet(isPresented: $isImagePickerPresented) {
-            ImagePicker(image: $pickedImage)
+            ImagePicker(image: $viewModel.pickedImage)
         }
     }
     
@@ -91,12 +111,12 @@ struct AddNewLexicalUnitScreen: View {
                 .shadow(radius: 20)
                 .offset(x: edge / 2, y: -edge / 2)
                 .onTapGesture {
-                    self.pickedImage = nil
+//                    self.viewModel.nullifyPickedImage()
                 }
         }
     }
 }
 
 #Preview {
-    AddNewLexicalUnitScreen()
+    AddNewLexicalUnitScreen(viewModel: .init())
 }
