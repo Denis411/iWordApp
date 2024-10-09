@@ -13,24 +13,10 @@ import SwiftUI
 @main
 struct iWordApp: App {
     private let folderScreenViewModel = FolderScreenViewModel()
-//    private let percentageView1: PercentView = {
-//        let view = PercentView()
-//        view.updatePercentage(180)
-//        return view
-//    }()
-//    private let percentageView2: PercentView = {
-//        let view = PercentView()
-//        view.updatePercentage(80)
-//        return view
-//    }()
     var body: some Scene {
         WindowGroup {
-//            FolderScreen(folderScreenViewModel: folderScreenViewModel)
+            FolderScreen(folderScreenViewModel: folderScreenViewModel)
             FolderContentViewControllerRepresentable()
-//            percentageView1
-//                .frame(width: 100, height: 100)
-//            percentageView2
-//                .frame(width: 100, height: 100)
         }
     }
 }

@@ -13,6 +13,7 @@ import SnapKit
 
 final class LexicalUnitCell: UITableViewCell {
     private var lexicalUnit: LexicalUnit?
+    private let internalView = UIView()
     private let percentageView = UILabel()
     private let originalWordLabel = UILabel()
     private let mainTranslationLabel = UILabel()
@@ -64,7 +65,7 @@ final class LexicalUnitCell: UITableViewCell {
             by: .init(
                 top: 0,
                 left: Self.horizontalInset,
-                bottom: 0,
+                bottom: Self.horizontalInset,
                 right: Self.horizontalInset
             )
         )
@@ -79,7 +80,7 @@ final class LexicalUnitCell: UITableViewCell {
 }
 
 extension LexicalUnitCell {
-    static let height: CGFloat = 100
+    static let height: CGFloat = 120
     static let spacingBetweenCells: CGFloat = 5
     static let horizontalInset: CGFloat = 20
 }
