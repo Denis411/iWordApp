@@ -68,7 +68,7 @@ final class PercentageView: UIView {
         
         roundLayer.cornerRadius = roundLayer.bounds.width / 2
         layer.addSublayer(roundLayer)
-        layer.addSublayer(label.layer)
+//        layer.addSublayer(label.layer)
     }
     
     private func createColorfulGradient(_ rect: CGRect, percentage: UInt8?) -> CALayer {
@@ -136,6 +136,7 @@ extension PercentageView {
         checkMarkImageView.isHidden = percentage < 100
         
         self.setNeedsDisplay()
+        self.setNeedsLayout()
     }
 }
 

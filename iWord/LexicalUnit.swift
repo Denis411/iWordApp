@@ -11,6 +11,7 @@
 import Foundation
 
 struct LexicalUnit {
+    private let uuid = UUID()
     let originalWord: String
     let mainTranslation: String
     let completionPercentage: UInt8
@@ -19,5 +20,11 @@ struct LexicalUnit {
         self.originalWord = "Cat"
         self.mainTranslation = "Кот"
         self.completionPercentage = UInt8.random(in: 99...100)
+    }
+}
+
+extension LexicalUnit: Equatable {
+    static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.uuid == rhs.uuid
     }
 }
