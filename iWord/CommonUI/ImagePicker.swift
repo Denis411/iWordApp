@@ -32,7 +32,8 @@ struct ImagePicker: UIViewControllerRepresentable {
     }
 
     class Coordinator: NSObject, PHPickerViewControllerDelegate {
-        let parent: ImagePicker
+        private let thumbnailSize: CGSize = CGSize(width: 200, height: 200)
+        private let parent: ImagePicker
 
         init(_ parent: ImagePicker) {
             self.parent = parent
@@ -47,7 +48,8 @@ struct ImagePicker: UIViewControllerRepresentable {
             if provider.canLoadObject(ofClass: UIImage.self) {
                 provider.loadObject(ofClass: UIImage.self) { image, _ in
                     DispatchQueue.main.async {
-                        self.parent.image = (image as? UIImage)?.pngData()
+                        let imageThumbnail = (image as? UIImage)?.preparingThumbnail(of: self.thumbnailSize)
+                        self.parent.image = imageThumbnail?.pngData()
                     }
                 }
             }
