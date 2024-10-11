@@ -12,12 +12,15 @@ import SwiftUI
 
 struct CardExercise: View {
     let lexicalUnit: LexicalUnit = .init()
-    @State var isInHintState: Bool = true
+    @State var isInHintState: Bool = false
     @State var rotationAngle: CGFloat = 0
     
     var body: some View {
         ZStack {
             Color.white
+                .onTapGesture {
+                    isInHintState.toggle()
+                }
                 .gesture(
                     DragGesture()
                         .onChanged{ value in
@@ -33,7 +36,7 @@ struct CardExercise: View {
                     initialText: "Cat",
                     secondaryText: "KOT",
                     pngData: lexicalUnit.pngImageData,
-                    isInHintState: $isInHintState
+                    isInHintState: isInHintState
                 )
             }
             .padding(.vertical, UIScreen.main.bounds.height * 0.15)
@@ -72,18 +75,18 @@ struct CartView: View {
     private let initialText: String
     private let secondaryText: String
     private let pngData: Data?
-    @Binding var isInHintState: Bool
+    private let isInHintState: Bool
     
     init(
         initialText: String,
         secondaryText: String,
         pngData: Data?,
-        isInHintState: Binding<Bool>
+        isInHintState: Bool
     ) {
         self.initialText = initialText
         self.secondaryText = secondaryText
         self.pngData = pngData
-        self._isInHintState = isInHintState
+        self.isInHintState = isInHintState
     }
     
     var body: some View {
@@ -93,9 +96,6 @@ struct CartView: View {
             } else {
                 createHintCard()
             }
-        }
-        .onTapGesture {
-            isInHintState.toggle()
         }
     }
     
