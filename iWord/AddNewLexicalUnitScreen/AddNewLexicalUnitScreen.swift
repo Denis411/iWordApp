@@ -10,21 +10,6 @@
 
 import SwiftUI
 
-final class NewLexicalUnitViewModel: ObservableObject {
-    @Published var originalLexicalUnit: String = ""
-    @Published var translation: String = ""
-    @Published var pickedImage: Data? = nil
-    
-    @MainActor func nullifyPickedImage() {
-        self.pickedImage = nil
-    }
-    
-    func saveLexicalUnit() {
-        
-    }
-    
-}
-
 struct AddNewLexicalUnitScreen: View {
     @State var isImagePickerPresented = false
     @State var isAlertPresented = false
