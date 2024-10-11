@@ -17,7 +17,8 @@ struct CardExercise: View {
     
     var body: some View {
         ZStack {
-            Color.white
+            countBackground(rotationAngle)
+                .ignoresSafeArea(.all)
                 .onTapGesture {
                     isInHintState.toggle()
                 }
@@ -68,6 +69,16 @@ extension CardExercise {
         let opacityInOneDegree = 1 / Self.maxAngleInDegrees
         let totalOpacity = opacityInOneDegree * absoluteDegree
         return 1 - totalOpacity
+    }
+    
+    func countBackground(_ angleInDegrees: CGFloat) -> Color {
+        if angleInDegrees > 0 {
+            return Color(red: 0, green: 1, blue: 0)
+        } else if angleInDegrees < 0 {
+            return Color(red: 1, green: 0, blue: 0)
+        } else {
+            return .white
+        }
     }
 }
 
