@@ -18,19 +18,15 @@ struct CardExercise: View {
     var body: some View {
         ZStack {
             Color.white
-            .gesture(
-                DragGesture()
-                    .onChanged{ value in
-                        rotationAngle = gestureWidthToDegree(value.translation.width)
-                        print(value.translation.width, "-", rotationAngle)
-                    }
-                    .onEnded { _ in
-                        if abs(rotationAngle) > 30 {
-                            print("Done")
+                .gesture(
+                    DragGesture()
+                        .onChanged{ value in
+                            rotationAngle = gestureWidthToDegrees(value.translation.width)
+                        }
+                        .onEnded { _ in
                             rotationAngle = 0
                         }
-                    }
-            )
+                )
             
             VStack {
                 CartView(
@@ -43,6 +39,7 @@ struct CardExercise: View {
             .padding(.vertical, UIScreen.main.bounds.height * 0.15)
             .padding(.horizontal, UIScreen.main.bounds.width * 0.1)
             .allowsHitTesting(false)
+            .opacity(countOpacity(rotationAngle))
             .rotationEffect(.degrees(rotationAngle), anchor: .bottom)
             .animation(.easeInOut, value: isInHintState)
         }
@@ -51,12 +48,23 @@ struct CardExercise: View {
 
 extension CardExercise {
     static let halfScreenWidth = UIScreen.main.bounds.width / 2
-    static let maxAngleInDegree: CGFloat = 45
+    static let maxAngleInDegrees: CGFloat = 45
     
-    func gestureWidthToDegree(_ width: CGFloat) -> CGFloat {
-        let pointsInOneDegree = Self.halfScreenWidth / Self.maxAngleInDegree
+    func gestureWidthToDegrees(_ width: CGFloat) -> CGFloat {
+        let pointsInOneDegree = Self.halfScreenWidth / Self.maxAngleInDegrees
         let currentAngle = width / pointsInOneDegree
         return currentAngle
+    }
+    
+    func countOpacity(_ angleInDegrees: CGFloat) -> CGFloat {
+        guard angleInDegrees < Self.maxAngleInDegrees else {
+            // should already be fully transparent
+            return 0
+        }
+        let absoluteDegree = abs(angleInDegrees)
+        let opacityInOneDegree = 1 / Self.maxAngleInDegrees
+        let totalOpacity = opacityInOneDegree * absoluteDegree
+        return 1 - totalOpacity
     }
 }
 
