@@ -17,6 +17,10 @@ struct CardExercise: View {
     
     var body: some View {
         ZStack {
+            createCloseButton {
+                print("Close")
+            }
+                .zIndex(1000)
             countBackground(rotationAngle)
                 .ignoresSafeArea(.all)
                 .onTapGesture {
@@ -47,6 +51,30 @@ struct CardExercise: View {
             .rotationEffect(.degrees(rotationAngle), anchor: .bottom)
             .animation(.easeInOut, value: isInHintState)
         }
+    }
+    
+    @ViewBuilder
+    private func createCloseButton(action: @escaping () -> Void) -> some View {
+        VStack {
+            HStack {
+                Spacer()
+                Button {
+                    action()
+                } label: {
+                    ZStack {
+                        Color.white
+                            .frame(width: 30, height: 30)
+                            .cornerRadius(15)
+                            .shadow(radius: 15)
+                        Image(systemName: "plus")
+                            .rotationEffect(.degrees(45), anchor: .center)
+                    }
+                }
+            }
+            Spacer()
+        }
+        .padding(.top, 20)
+        .padding(.trailing, 20)
     }
 }
 
