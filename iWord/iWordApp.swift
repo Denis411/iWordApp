@@ -14,12 +14,13 @@ import SwiftUI
 struct iWordApp: App {
     private let folderScreenViewModel = FolderScreenViewModel()
     private let newLexicalUnitViewModel = NewLexicalUnitViewModel()
+    private let exerciseCardViewModel = CardExerciseViewModel(listOfModels: [.init(), .init()])
     var body: some Scene {
         WindowGroup {
 //            FolderScreen(folderScreenViewModel: folderScreenViewModel)
 //            FolderContentViewControllerRepresentable()
 //            AddNewLexicalUnitScreen(viewModel: newLexicalUnitViewModel)
-            CardExercise()
+            CardExercise(cardExerciseViewModel: exerciseCardViewModel)
         }
     }
 }

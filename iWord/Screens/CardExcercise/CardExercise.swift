@@ -10,15 +10,48 @@
 
 import SwiftUI
 
+final class CardExerciseViewModel: ObservableObject {
+    private let listOfModels: [LexicalUnit]
+    @Published var currentModelIndex: Int
+    
+    init(listOfModels: [LexicalUnit]) {
+        if listOfModels.count == 0 {
+            assertionFailure()
+        }
+        
+        self.listOfModels = listOfModels
+        self.currentModelIndex = 0
+    }
+    
+    // User knows the word
+    func reactPositively () {
+        
+    }
+    
+    // user does not know the word
+    func reactNegatively() {
+        
+    }
+    
+    func closeExercise() {
+        
+    }
+}
+
 struct CardExercise: View {
+    @ObservedObject private var cardExerciseViewModel: CardExerciseViewModel
     let lexicalUnit: LexicalUnit = .init()
     @State var isInHintState: Bool = false
     @State var rotationAngle: CGFloat = 0
     
+    init(cardExerciseViewModel: CardExerciseViewModel) {
+        self.cardExerciseViewModel = cardExerciseViewModel
+    }
+    
     var body: some View {
         ZStack {
             createCloseButton {
-                print("Close")
+                cardExerciseViewModel.closeExercise()
             }
                 .zIndex(1000)
             countBackground(rotationAngle)
@@ -32,6 +65,11 @@ struct CardExercise: View {
                             rotationAngle = gestureWidthToDegrees(value.translation.width)
                         }
                         .onEnded { _ in
+                            if rotationAngle > Self.maxAngleInDegrees {
+                                cardExerciseViewModel.reactPositively()
+                            } else if rotationAngle < -Self.maxAngleInDegrees {
+                                cardExerciseViewModel.reactNegatively()
+                            }
                             rotationAngle = 0
                         }
                 )
@@ -171,5 +209,6 @@ struct CartView: View {
 }
 
 #Preview {
-    CardExercise()
+    
+    CardExercise(cardExerciseViewModel: .init(listOfModels: [.init(), .init()]))
 }
