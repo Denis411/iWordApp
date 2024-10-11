@@ -13,6 +13,7 @@ import SwiftUI
 final class CardExerciseViewModel: ObservableObject {
     private var listOfModels: [LexicalUnit]
     @Published private(set) var currentModel: LexicalUnit
+    @Published private(set) var isExerciseCompleted: Bool = false
     private var currentIndex: Int = 0
     
     init(listOfModels: [LexicalUnit]) {
@@ -31,18 +32,33 @@ final class CardExerciseViewModel: ObservableObject {
             return
         }
         listOfModels[currentIndex].increasePercentage(by: 1)
+        
         currentIndex += 1
+        
+        if currentIndex >= listOfModels.count {
+            isExerciseCompleted = true
+            return
+        }
+        
         currentModel = listOfModels[currentIndex]
     }
     
     // User does not know the word
     func reactNegatively() {
-        guard currentIndex < listOfModels.count else {
+        guard currentIndex < listOfModels.count,
+        isExerciseCompleted != true else {
             assertionFailure()
             return
         }
+        
         listOfModels[currentIndex].decreasePercentage(by: 1)
+        
         currentIndex += 1
+        
+        if currentIndex >= listOfModels.count {
+            isExerciseCompleted = true
+            return
+        }
         currentModel = listOfModels[currentIndex]
     }
     
@@ -60,7 +76,20 @@ struct CardExercise: View {
         self.cardExerciseViewModel = cardExerciseViewModel
     }
     
+    // FIXME: - AnyView is evil
     var body: some View {
+        if cardExerciseViewModel.isExerciseCompleted {
+            AnyView(
+                Text("Well done")
+                    .font(.system(size: 25))
+                    .fontWeight(.bold)
+            )
+        } else {
+            AnyView(exerciseView)
+        }
+    }
+    
+    var exerciseView : some View {
         ZStack {
             createCloseButton {
                 cardExerciseViewModel.closeExercise()
