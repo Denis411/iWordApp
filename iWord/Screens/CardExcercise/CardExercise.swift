@@ -23,9 +23,15 @@ struct CardExercise: View {
     var body: some View {
         if cardExerciseViewModel.isExerciseCompleted {
             AnyView(
-                Text("Well done")
-                    .font(.system(size: 25))
-                    .fontWeight(.bold)
+                ZStack {
+                    Color.white
+                        .onTapGesture {
+                            cardExerciseViewModel.closeExercise()
+                        }
+                    Text("Well done")
+                        .font(.system(size: 25))
+                        .fontWeight(.bold)
+                }
             )
         } else {
             AnyView(exerciseView)
