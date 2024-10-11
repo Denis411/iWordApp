@@ -15,11 +15,13 @@ struct LexicalUnit {
     let originalWord: String
     let mainTranslation: String
     let completionPercentage: UInt8
+    let pngImageData: Data?
     
     init() {
         self.originalWord = "Cat"
         self.mainTranslation = "Кот"
         self.completionPercentage = UInt8.random(in: 99...100)
+        self.pngImageData = nil
     }
 }
 
