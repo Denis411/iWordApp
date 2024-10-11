@@ -18,7 +18,8 @@ struct iWordApp: App {
         WindowGroup {
 //            FolderScreen(folderScreenViewModel: folderScreenViewModel)
 //            FolderContentViewControllerRepresentable()
-            AddNewLexicalUnitScreen(viewModel: newLexicalUnitViewModel)
+//            AddNewLexicalUnitScreen(viewModel: newLexicalUnitViewModel)
+            CardExercise()
         }
     }
 }

@@ -88,6 +88,7 @@ struct AddNewLexicalUnitScreen: View {
         ZStack {
             Image(uiImage: uiImage)
                 .resizable()
+                .aspectRatio(contentMode: .fill)
                 .frame(width: edge, height: edge)
                 .cornerRadius(20)
             Image(systemName: "minus")

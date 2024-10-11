@@ -9,6 +9,8 @@
 // University website: https://tambovstateuniversity.org 
 
 import Foundation
+// TODO: - Remove UIKit
+import UIKit
 
 struct LexicalUnit {
     private let uuid = UUID()
@@ -21,7 +23,7 @@ struct LexicalUnit {
         self.originalWord = "Cat"
         self.mainTranslation = "Кот"
         self.completionPercentage = UInt8.random(in: 99...100)
-        self.pngImageData = nil
+        self.pngImageData = UIImage(named: "KittyCat")?.pngData()
     }
 }
 
