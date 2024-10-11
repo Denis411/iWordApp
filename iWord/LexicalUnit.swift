@@ -16,7 +16,7 @@ struct LexicalUnit {
     private let uuid = UUID()
     let originalWord: String
     let mainTranslation: String
-    let completionPercentage: UInt8
+    var completionPercentage: UInt8
     let pngImageData: Data?
     
     init() {
@@ -24,6 +24,14 @@ struct LexicalUnit {
         self.mainTranslation = "Кот"
         self.completionPercentage = UInt8.random(in: 99...100)
         self.pngImageData = UIImage(named: "KittyCat")?.pngData()
+    }
+    
+    mutating func increasePercentage(by percent: UInt8) {
+        completionPercentage += percent
+    }
+    
+    mutating func decreasePercentage(by percent: UInt8) {
+        completionPercentage -= percent
     }
 }
 

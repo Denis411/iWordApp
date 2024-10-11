@@ -11,8 +11,9 @@
 import SwiftUI
 
 final class CardExerciseViewModel: ObservableObject {
-    private let listOfModels: [LexicalUnit]
-    @Published var currentModelIndex: Int
+    private var listOfModels: [LexicalUnit]
+    @Published private(set) var currentModel: LexicalUnit
+    private var currentIndex: Int = 0
     
     init(listOfModels: [LexicalUnit]) {
         if listOfModels.count == 0 {
@@ -20,17 +21,29 @@ final class CardExerciseViewModel: ObservableObject {
         }
         
         self.listOfModels = listOfModels
-        self.currentModelIndex = 0
+        self.currentModel = listOfModels[0]
     }
     
     // User knows the word
     func reactPositively () {
-        
+        guard currentIndex < listOfModels.count else {
+            assertionFailure()
+            return
+        }
+        listOfModels[currentIndex].increasePercentage(by: 1)
+        currentIndex += 1
+        currentModel = listOfModels[currentIndex]
     }
     
-    // user does not know the word
+    // User does not know the word
     func reactNegatively() {
-        
+        guard currentIndex < listOfModels.count else {
+            assertionFailure()
+            return
+        }
+        listOfModels[currentIndex].decreasePercentage(by: 1)
+        currentIndex += 1
+        currentModel = listOfModels[currentIndex]
     }
     
     func closeExercise() {
@@ -40,7 +53,6 @@ final class CardExerciseViewModel: ObservableObject {
 
 struct CardExercise: View {
     @ObservedObject private var cardExerciseViewModel: CardExerciseViewModel
-    let lexicalUnit: LexicalUnit = .init()
     @State var isInHintState: Bool = false
     @State var rotationAngle: CGFloat = 0
     
@@ -78,7 +90,7 @@ struct CardExercise: View {
                 CartView(
                     initialText: "Cat",
                     secondaryText: "KOT",
-                    pngData: lexicalUnit.pngImageData,
+                    pngData: cardExerciseViewModel.currentModel.pngImageData,
                     isInHintState: isInHintState
                 )
             }
