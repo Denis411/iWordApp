@@ -10,63 +10,6 @@
 
 import SwiftUI
 
-final class CardExerciseViewModel: ObservableObject {
-    private var listOfModels: [LexicalUnit]
-    @Published private(set) var currentModel: LexicalUnit
-    @Published private(set) var isExerciseCompleted: Bool = false
-    private var currentIndex: Int = 0
-    
-    init(listOfModels: [LexicalUnit]) {
-        if listOfModels.count == 0 {
-            assertionFailure()
-        }
-        
-        self.listOfModels = listOfModels
-        self.currentModel = listOfModels[0]
-    }
-    
-    // User knows the word
-    func reactPositively () {
-        guard currentIndex < listOfModels.count else {
-            assertionFailure()
-            return
-        }
-        listOfModels[currentIndex].increasePercentage(by: 1)
-        
-        currentIndex += 1
-        
-        if currentIndex >= listOfModels.count {
-            isExerciseCompleted = true
-            return
-        }
-        
-        currentModel = listOfModels[currentIndex]
-    }
-    
-    // User does not know the word
-    func reactNegatively() {
-        guard currentIndex < listOfModels.count,
-        isExerciseCompleted != true else {
-            assertionFailure()
-            return
-        }
-        
-        listOfModels[currentIndex].decreasePercentage(by: 1)
-        
-        currentIndex += 1
-        
-        if currentIndex >= listOfModels.count {
-            isExerciseCompleted = true
-            return
-        }
-        currentModel = listOfModels[currentIndex]
-    }
-    
-    func closeExercise() {
-        
-    }
-}
-
 struct CardExercise: View {
     @ObservedObject private var cardExerciseViewModel: CardExerciseViewModel
     @State var isInHintState: Bool = false
@@ -94,7 +37,7 @@ struct CardExercise: View {
             createCloseButton {
                 cardExerciseViewModel.closeExercise()
             }
-                .zIndex(1000)
+            .zIndex(1000)
             countBackground(rotationAngle)
                 .ignoresSafeArea(.all)
                 .onTapGesture {
@@ -186,66 +129,6 @@ extension CardExercise {
         } else {
             return .white
         }
-    }
-}
-
-struct CartView: View {
-    private let initialText: String
-    private let secondaryText: String
-    private let pngData: Data?
-    private let isInHintState: Bool
-    
-    init(
-        initialText: String,
-        secondaryText: String,
-        pngData: Data?,
-        isInHintState: Bool
-    ) {
-        self.initialText = initialText
-        self.secondaryText = secondaryText
-        self.pngData = pngData
-        self.isInHintState = isInHintState
-    }
-    
-    var body: some View {
-        Group {
-            if !isInHintState {
-                createMainCard()
-            } else {
-                createHintCard()
-            }
-        }
-    }
-    
-    private func createMainCard() -> some View {
-        ZStack {
-            Rectangle()
-            VStack {
-                if let pngData,
-                   let image = UIImage(data: pngData) {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                }
-                Text(initialText)
-                    .foregroundStyle(.black)
-            }
-            .padding()
-        }
-        .foregroundStyle(.white)
-        .cornerRadius(20)
-        .shadow(color: .gray, radius: 20)
-    }
-    
-    private func createHintCard() -> some View {
-        ZStack {
-            Rectangle()
-            Text(secondaryText)
-                .foregroundStyle(.black)
-        }
-        .foregroundStyle(.white)
-        .cornerRadius(20)
-        .shadow(color: .gray, radius: 20)
     }
 }
 
