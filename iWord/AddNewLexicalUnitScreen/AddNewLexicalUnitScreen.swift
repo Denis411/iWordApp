@@ -11,9 +11,9 @@
 import SwiftUI
 
 final class NewLexicalUnitViewModel: ObservableObject {
-    @MainActor @Published var originalLexicalUnit: String = ""
-    @MainActor @Published var translation: String = ""
-    @MainActor @Published var pickedImage: UIImage? = nil
+    @Published var originalLexicalUnit: String = ""
+    @Published var translation: String = ""
+    @Published var pickedImage: Data? = nil
     
     @MainActor func nullifyPickedImage() {
         self.pickedImage = nil
@@ -59,7 +59,8 @@ struct AddNewLexicalUnitScreen: View {
                     }
                 }
                 
-                if let pickedImage = viewModel.pickedImage {
+                if let imageData = viewModel.pickedImage,
+                   let pickedImage = UIImage(data: imageData) {
                     createImageView(uiImage: pickedImage)
                         .offset(y: 30)
                 }
@@ -111,7 +112,7 @@ struct AddNewLexicalUnitScreen: View {
                 .shadow(radius: 20)
                 .offset(x: edge / 2, y: -edge / 2)
                 .onTapGesture {
-//                    self.viewModel.nullifyPickedImage()
+                    self.viewModel.nullifyPickedImage()
                 }
         }
     }

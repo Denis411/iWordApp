@@ -13,7 +13,7 @@ import UIKit
 import PhotosUI
 
 struct ImagePicker: UIViewControllerRepresentable {
-    @Binding var image: UIImage?
+    @Binding var image: Data?
 
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var config = PHPickerConfiguration()
@@ -43,9 +43,12 @@ struct ImagePicker: UIViewControllerRepresentable {
 
             guard let provider = results.first?.itemProvider else { return }
 
+            // FIXME: - Performance opportunity, you should load Data in place of UIImage to make modules less coupled
             if provider.canLoadObject(ofClass: UIImage.self) {
                 provider.loadObject(ofClass: UIImage.self) { image, _ in
-                    self.parent.image = image as? UIImage
+                    DispatchQueue.main.async {
+                        self.parent.image = (image as? UIImage)?.pngData()
+                    }
                 }
             }
         }
