@@ -11,10 +11,18 @@
 import SwiftUI
 
 struct FolderContentViewControllerRepresentable: UIViewControllerRepresentable {
+    @ObservedObject private var folderContentViewModel: FolderContentViewModel
+    
+    init(folderContentViewModel: FolderContentViewModel) {
+        self.folderContentViewModel = folderContentViewModel
+    }
+    
     func makeUIViewController(context: Context) -> FolderContentViewController {
-        FolderContentViewController()
+        FolderContentViewController(folderContentViewModel: folderContentViewModel)
     }
     
     func updateUIViewController(_ uiViewController: FolderContentViewController, context: Context) {
     }
 }
+
+

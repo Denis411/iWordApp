@@ -12,8 +12,12 @@ import UIKit
 import SnapKit
 
 final class FolderContentView: UIView {
-    private var listOfUnits: [LexicalUnit] = [LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit(), LexicalUnit()]
+    private var listOfUnits: [LexicalUnit]
     private let tableView = UITableView()
+    private var addNewLexicalUnitAction: () -> Void
+    private var deleteLexicalUnitAction: (IndexPath) -> Void
+    private var didTapOnLexicalUnitAction: (IndexPath) -> Void
+    
     private let addButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = FolderContentView.addButtonEdge / 2
@@ -35,8 +39,18 @@ final class FolderContentView: UIView {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(
+        listOfUnits: [LexicalUnit],
+        addNewLexicalUnitAction: @escaping () -> Void,
+        deleteLexicalUnitAction: @escaping (IndexPath) -> Void,
+        didTapOnLexicalUnitAction: @escaping (IndexPath) -> Void
+    ) {
+        self.listOfUnits = listOfUnits
+        self.addNewLexicalUnitAction = addNewLexicalUnitAction
+        self.deleteLexicalUnitAction = deleteLexicalUnitAction
+        self.didTapOnLexicalUnitAction = didTapOnLexicalUnitAction
+        
+        super.init(frame: .zero)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(LexicalUnitCell.self, forCellReuseIdentifier: "LU")
@@ -56,7 +70,11 @@ final class FolderContentView: UIView {
     }
     
     @objc func addButtonAction() {
-        listOfUnits.append(.init())
+        addNewLexicalUnitAction()
+    }
+    
+    func updateListOfLexicalUnits(_ newList: [LexicalUnit]) {
+        self.listOfUnits = newList
         tableView.reloadData()
     }
 }
@@ -78,8 +96,7 @@ extension FolderContentView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            listOfUnits.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            deleteLexicalUnitAction(indexPath)
         }
     }
     
@@ -88,10 +105,15 @@ extension FolderContentView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, performPrimaryActionForRowAt indexPath: IndexPath) {
-        print("Open edit view")
+        didTapOnLexicalUnitAction(indexPath)
     }
 }
 
 extension FolderContentView {
     static let addButtonEdge: CGFloat = 100
+}
+
+#Preview {
+    let folderVM = FolderContentViewModel(listOfUnits: [.init(), .init(), .init(), .init()])
+    FolderContentViewController(folderContentViewModel: folderVM)
 }

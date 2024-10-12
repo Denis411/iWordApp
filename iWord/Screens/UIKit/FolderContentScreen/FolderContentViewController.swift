@@ -9,11 +9,44 @@
 // University website: https://tambovstateuniversity.org 
 
 import UIKit
+import Combine
 
+// Making binding in FolderContentViewControllerRepresentable might look more appropriate
+// but I want to keep it here in case I have to control the lifecycle of the VC without any extra closures
 final class FolderContentViewController: UIViewController {
+    private let folderContentViewModel: FolderContentViewModel
+    private var disposedBag = Set<AnyCancellable>()
+    
     private var internalView: FolderContentView { view as! FolderContentView }
     
+    init(folderContentViewModel: FolderContentViewModel) {
+        self.folderContentViewModel = folderContentViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
-        view = FolderContentView()
+        view = FolderContentView(
+            listOfUnits: folderContentViewModel.listOfUnits,
+            addNewLexicalUnitAction: folderContentViewModel.openAddNewLexicalUnitScreen,
+            deleteLexicalUnitAction: folderContentViewModel.deleteLexicalUnit(at:),
+            didTapOnLexicalUnitAction: folderContentViewModel.didTapLexicalUnit(at:)
+        )
+        bind()
+        // initial update
+        internalView.updateListOfLexicalUnits(folderContentViewModel.listOfUnits)
+    }
+    
+    private func bind() {
+        folderContentViewModel
+            .$listOfUnits
+            .receive(on: DispatchQueue.main)
+            .sink { newListPublisher in
+                self.internalView.updateListOfLexicalUnits(newListPublisher)
+            }
+            .store(in: &disposedBag)
     }
 }

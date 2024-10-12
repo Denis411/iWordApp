@@ -15,12 +15,13 @@ struct iWordApp: App {
     private let folderScreenViewModel = FolderScreenViewModel()
     private let newLexicalUnitViewModel = NewLexicalUnitViewModel()
     private let exerciseCardViewModel = CardExerciseViewModel(listOfModels: [.init(), .init()])
+    private let folderContentViewModel = FolderContentViewModel(listOfUnits: [.init(), .init()])
     var body: some Scene {
         WindowGroup {
 //            FolderScreen(folderScreenViewModel: folderScreenViewModel)
-//            FolderContentViewControllerRepresentable()
+            FolderContentViewControllerRepresentable(folderContentViewModel: folderContentViewModel)
 //            AddNewLexicalUnitScreen(viewModel: newLexicalUnitViewModel)
-            CardExercise(cardExerciseViewModel: exerciseCardViewModel)
+//            CardExercise(cardExerciseViewModel: exerciseCardViewModel)
         }
     }
 }
