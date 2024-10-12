@@ -10,7 +10,7 @@
 
 import SwiftUI
 
-struct FolderScreen: View {
+struct FolderScreenView: View {
     @ObservedObject var folderScreenViewModel: FolderScreenViewModel
     @State var newFolderName: String = ""
     @State var isNewFolderAlertPresented: Bool = false
@@ -65,7 +65,7 @@ struct FolderScreen: View {
 }
 
 // MARK: - Subviews
-private extension FolderScreen {
+private extension FolderScreenView {
     @ViewBuilder
     func createContentView() -> some View {
             List {
@@ -94,7 +94,7 @@ private extension FolderScreen {
     }
 }
 
-private extension FolderScreen {
+private extension FolderScreenView {
     func deleteFolder(_ model: FolderModel.Folder) {
         folderScreenViewModel.setFolderToDelete(model)
         isDeleteAlertShown = true
@@ -110,11 +110,11 @@ private extension FolderScreen {
     }
 }
 
-fileprivate extension FolderScreen {
+fileprivate extension FolderScreenView {
     static let addButtonWidth: CGFloat = 100
     static let addButtonOffset: CGFloat = 20
 }
 
 #Preview {
-    FolderScreen(folderScreenViewModel: .init())
+    FolderScreenView(folderScreenViewModel: .init())
 }
