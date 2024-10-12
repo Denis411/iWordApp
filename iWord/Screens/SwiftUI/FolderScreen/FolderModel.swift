@@ -34,11 +34,11 @@ struct FolderModel {
 
 extension FolderModel {
     struct Folder: Identifiable, Equatable {
-        var id = UUID()
+        var id = UUID().uuidString
         var name: String
         var numberOfWords: String
         
-        init(id: UUID = UUID(), name: String, numberOfWords: String) {
+        init(id: String = UUID().uuidString, name: String, numberOfWords: String) {
             self.id = id
             self.name = name
             self.numberOfWords = numberOfWords

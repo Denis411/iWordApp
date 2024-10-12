@@ -13,7 +13,7 @@ import Foundation
 import UIKit
 
 struct LexicalUnit {
-    private let uuid = UUID()
+    private let uuid = UUID().uuidString
     let originalWord: String
     let mainTranslation: String
     var completionPercentage: UInt8
