@@ -11,12 +11,12 @@
 import Combine
 
 final class CardExerciseViewModel: ObservableObject {
-    private var listOfLexicalUnits: [LexicalUnit]
-    @Published private(set) var currentModel: LexicalUnit
+    private var listOfLexicalUnits: [LexicalUnitDataModel]
+    @Published private(set) var currentModel: LexicalUnitDataModel
     @Published private(set) var isExerciseCompleted: Bool = false
     private var currentIndex: Int = 0
     
-    init(with listOfLexicalUnits: [LexicalUnit]) {
+    init(with listOfLexicalUnits: [LexicalUnitDataModel]) {
         if listOfLexicalUnits.count == 0 {
             assertionFailure()
         }

@@ -12,7 +12,7 @@ import UIKit
 import SnapKit
 
 final class LexicalUnitCell: UITableViewCell {
-    private var lexicalUnit: LexicalUnit?
+    private var lexicalUnit: LexicalUnitDataModel?
     private let internalView = UIView()
     private let percentageView = UILabel()
     private let originalWordLabel = UILabel()
@@ -71,7 +71,7 @@ final class LexicalUnitCell: UITableViewCell {
         )
     }
     
-    func setLexicalUnit(_ lexicalUnit: LexicalUnit) {
+    func setLexicalUnit(_ lexicalUnit: LexicalUnitDataModel) {
         self.lexicalUnit = lexicalUnit
         originalWordLabel.text = lexicalUnit.originalWord
         mainTranslationLabel.text = lexicalUnit.mainTranslation

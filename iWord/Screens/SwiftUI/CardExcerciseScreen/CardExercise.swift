@@ -139,6 +139,6 @@ extension CardExerciseView {
 }
 
 #Preview {
-    let listOfLexicalUnits: [LexicalUnit] = [.init(), .init()]
+    let listOfLexicalUnits: [LexicalUnitDataModel] = [.init(), .init()]
     CardExerciseView(cardExerciseViewModel: .init(with: listOfLexicalUnits))
 }

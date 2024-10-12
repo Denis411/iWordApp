@@ -13,13 +13,13 @@ import Foundation
 typealias LocalRepositoryProtocol = FolderModelLocalRepositoryProtocol & LexicalUnitModelLocalRepositoryProtocol
 
 protocol FolderModelLocalRepositoryProtocol {
-    func fetchFolders() async throws -> [FolderModel.Folder]
+    func fetchFolders() async throws -> [FolderDataModel]
     func deleteFolder(uuid: String) async throws
-    func updateFolder(folderModel: FolderModel.Folder) async throws
+    func updateFolder(folderModel: FolderDataModel) async throws
 }
 
 protocol LexicalUnitModelLocalRepositoryProtocol {
-    func fetchLexicalUnits(with folderID: String) async throws -> [LexicalUnit]
+    func fetchLexicalUnits(with folderID: String) async throws -> [LexicalUnitDataModel]
     func deleteLexicalUnit(with uuid: String) throws
     func updateLexicalUnit(with uuid: String) async throws
 }
@@ -27,7 +27,7 @@ protocol LexicalUnitModelLocalRepositoryProtocol {
 // MARK: - I should have created a separated models for saving data in the DB
 final class LocalRepository: FolderModelLocalRepositoryProtocol {
     
-    func fetchFolders() async throws -> [FolderModel.Folder] {
+    func fetchFolders() async throws -> [FolderDataModel] {
         []
     }
     
@@ -35,13 +35,13 @@ final class LocalRepository: FolderModelLocalRepositoryProtocol {
         
     }
     
-    func updateFolder(folderModel: FolderModel.Folder) async throws {
+    func updateFolder(folderModel: FolderDataModel) async throws {
         
     }
 }
 
 extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
-    func fetchLexicalUnits(with folderID: String) async throws -> [LexicalUnit] {
+    func fetchLexicalUnits(with folderID: String) async throws -> [LexicalUnitDataModel] {
         []
     }
     

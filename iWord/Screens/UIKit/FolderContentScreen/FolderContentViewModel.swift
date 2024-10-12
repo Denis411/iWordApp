@@ -13,7 +13,7 @@ import Foundation
 final class FolderContentViewModel: ObservableObject {
     private let folderID: String
     private let router: RouterProtocol
-    @Published private(set) var listOfLexicalUnits: [LexicalUnit]
+    @Published private(set) var listOfLexicalUnits: [LexicalUnitDataModel]
     
     init(
         with folderID: String,

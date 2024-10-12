@@ -12,7 +12,7 @@ import UIKit
 import SnapKit
 
 final class FolderContentView: UIView {
-    private var listOfUnits: [LexicalUnit]
+    private var listOfUnits: [LexicalUnitDataModel]
     private let tableView = UITableView()
     private var startExerciseAction: () -> Void
     private var addNewLexicalUnitAction: () -> Void
@@ -56,7 +56,7 @@ final class FolderContentView: UIView {
     }
     
     init(
-        listOfUnits: [LexicalUnit],
+        listOfUnits: [LexicalUnitDataModel],
         startExerciseAction: @escaping () -> Void,
         addNewLexicalUnitAction: @escaping () -> Void,
         deleteLexicalUnitAction: @escaping (IndexPath) -> Void,
@@ -114,7 +114,7 @@ final class FolderContentView: UIView {
         addNewLexicalUnitAction()
     }
     
-    func updateListOfLexicalUnits(_ newList: [LexicalUnit]) {
+    func updateListOfLexicalUnits(_ newList: [LexicalUnitDataModel]) {
         self.listOfUnits = newList
         tableView.reloadData()
     }

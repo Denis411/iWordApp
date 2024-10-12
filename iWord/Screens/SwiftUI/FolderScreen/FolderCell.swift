@@ -11,15 +11,15 @@
 import SwiftUI
 
 struct FolderCell: View {
-    private let folderModel: FolderModel.Folder
+    private let folderModel: FolderDataModel
 
-    private let editAction:   (FolderModel.Folder) -> Void
-    private let deleteAction: (FolderModel.Folder) -> Void
+    private let editAction:   (FolderDataModel) -> Void
+    private let deleteAction: (FolderDataModel) -> Void
     
     init(
-        _ folderModel: FolderModel.Folder,
-        editAction:   @escaping (FolderModel.Folder) -> Void,
-        deleteAction: @escaping (FolderModel.Folder) -> Void
+        _ folderModel: FolderDataModel,
+        editAction:   @escaping (FolderDataModel) -> Void,
+        deleteAction: @escaping (FolderDataModel) -> Void
     ) {
         self.folderModel = folderModel
 
@@ -92,7 +92,7 @@ private extension FolderCell {
 }
 
 #Preview {
-    let model = FolderModel.Folder(
+    let model = FolderDataModel(
         id: .init(),
         name: "Name",
         numberOfWords: "10"

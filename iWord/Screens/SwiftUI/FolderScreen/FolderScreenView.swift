@@ -95,17 +95,17 @@ private extension FolderScreenView {
 }
 
 private extension FolderScreenView {
-    func deleteFolder(_ model: FolderModel.Folder) {
+    func deleteFolder(_ model: FolderDataModel) {
         folderScreenViewModel.setFolderToDelete(model)
         isDeleteAlertShown = true
     }
     
-    func editFolder(_ model: FolderModel.Folder) {
+    func editFolder(_ model: FolderDataModel) {
         folderScreenViewModel.setFolderToEdit(model)
         isEditAlertShown = true
     }
     
-    func handleOnFolderTap(_ model: FolderModel.Folder) {
+    func handleOnFolderTap(_ model: FolderDataModel) {
         folderScreenViewModel.openFolderContent(folderID: model.id)
     }
 }

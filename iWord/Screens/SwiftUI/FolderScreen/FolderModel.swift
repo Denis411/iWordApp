@@ -11,37 +11,23 @@
 import Foundation
 
 struct FolderModel {
-    var listOfFolders: [Folder] = []
+    var listOfFolders: [FolderDataModel] = []
     
-    mutating func addFolder(_ folder: Folder) {
+    mutating func addFolder(_ folder: FolderDataModel) {
         self.listOfFolders.append(folder)
     }
     
-    mutating func deleteFolder(_ folder: Folder) {
+    mutating func deleteFolder(_ folder: FolderDataModel) {
         self.listOfFolders.removeAll { currentFolder in
             folder == currentFolder
         }
     }
     
-    mutating func editFolderName(model: Folder, newName: String) {
+    mutating func editFolderName(model: FolderDataModel, newName: String) {
         guard let folderToEditIndex = listOfFolders.firstIndex(where: { $0 == model }) else {
             return
         }
         
         listOfFolders[folderToEditIndex].name = newName
-    }
-}
-
-extension FolderModel {
-    struct Folder: Identifiable, Equatable {
-        var id = UUID().uuidString
-        var name: String
-        var numberOfWords: String
-        
-        init(id: String = UUID().uuidString, name: String, numberOfWords: String) {
-            self.id = id
-            self.name = name
-            self.numberOfWords = numberOfWords
-        }
     }
 }

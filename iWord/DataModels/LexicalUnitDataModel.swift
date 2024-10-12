@@ -12,7 +12,7 @@ import Foundation
 // TODO: - Remove UIKit
 import UIKit
 
-struct LexicalUnit: Hashable {
+struct LexicalUnitDataModel: Hashable {
     private let uuid = UUID().uuidString
     let folderID: String
     let originalWord: String
@@ -37,7 +37,7 @@ struct LexicalUnit: Hashable {
     }
 }
 
-extension LexicalUnit: Equatable {
+extension LexicalUnitDataModel: Equatable {
     static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.uuid == rhs.uuid
     }

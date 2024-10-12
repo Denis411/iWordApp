@@ -1,4 +1,4 @@
-// Route.swift
+// Folder.swift
 // iWord
 //
 // Created by Denis Ulianov on 10/12/24.
@@ -10,10 +10,14 @@
 
 import Foundation
 
-// Contains the possible destinations in our Router
-// Data between views will be passed through repository
-enum Route: Hashable {
-    case folderContentView(folderID: String)
-    case newLexicalUnitView
-    case cardExerciseView(listOfLexicalUnits: [LexicalUnitDataModel])
+struct FolderDataModel: Identifiable, Equatable {
+    var id = UUID().uuidString
+    var name: String
+    var numberOfWords: String
+    
+    init(id: String = UUID().uuidString, name: String, numberOfWords: String) {
+        self.id = id
+        self.name = name
+        self.numberOfWords = numberOfWords
+    }
 }

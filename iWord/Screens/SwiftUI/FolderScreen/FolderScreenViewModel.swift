@@ -12,8 +12,8 @@ import Combine
 
 final class FolderScreenViewModel: ObservableObject {
     @Published private(set) var folderModel: FolderModel = FolderModel()
-    private(set) var folderToDelete: FolderModel.Folder? = nil
-    private(set) var folderToEdit: FolderModel.Folder? = nil
+    private(set) var folderToDelete: FolderDataModel? = nil
+    private(set) var folderToEdit: FolderDataModel? = nil
     private let router: RouterProtocol
     
     init(router: RouterProtocol) {
@@ -21,14 +21,14 @@ final class FolderScreenViewModel: ObservableObject {
     }
     
     func addFolder(with name: String) {
-        let newFolderModel = FolderModel.Folder(name: name, numberOfWords: "")
+        let newFolderModel = FolderDataModel(name: name, numberOfWords: "")
         folderModel.addFolder(newFolderModel)
     }
     
     
     // set folder before deleting
     // this wired way is used because of SwiftUI alert limitations
-    func setFolderToDelete(_ model: FolderModel.Folder) {
+    func setFolderToDelete(_ model: FolderDataModel) {
         folderToDelete = model
     }
     
@@ -43,7 +43,7 @@ final class FolderScreenViewModel: ObservableObject {
     
     // set folder before deleting
     // this wired way is used because of SwiftUI alert limitations
-    func setFolderToEdit(_ model: FolderModel.Folder) {
+    func setFolderToEdit(_ model: FolderDataModel) {
         self.folderToEdit = model
     }
     
