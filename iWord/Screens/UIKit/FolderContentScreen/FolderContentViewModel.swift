@@ -36,4 +36,8 @@ final class FolderContentViewModel: ObservableObject {
     func openAddNewLexicalUnitScreen() {
         router.navigateTo(.newLexicalUnitView)
     }
+    
+    func openCardExerciseScreen() {
+        router.navigateTo(.cardExerciseView)
+    }
 }

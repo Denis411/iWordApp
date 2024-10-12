@@ -31,6 +31,7 @@ final class FolderContentViewController: UIViewController {
     override func loadView() {
         view = FolderContentView(
             listOfUnits: folderContentViewModel.listOfUnits,
+            startExerciseAction: folderContentViewModel.openCardExerciseScreen,
             addNewLexicalUnitAction: folderContentViewModel.openAddNewLexicalUnitScreen,
             deleteLexicalUnitAction: folderContentViewModel.deleteLexicalUnit(at:),
             didTapOnLexicalUnitAction: folderContentViewModel.didTapLexicalUnit(at:)
