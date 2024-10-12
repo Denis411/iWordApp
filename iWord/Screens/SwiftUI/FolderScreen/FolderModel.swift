@@ -28,6 +28,6 @@ struct FolderModel {
             return
         }
         
-        listOfFolders[folderToEditIndex].name = newName
+        listOfFolders[folderToEditIndex].changeName(newName)
     }
 }

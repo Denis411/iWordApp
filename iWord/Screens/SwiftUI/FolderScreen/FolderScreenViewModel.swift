@@ -21,7 +21,7 @@ final class FolderScreenViewModel: ObservableObject {
     }
     
     func addFolder(with name: String) {
-        let newFolderModel = FolderDataModel(name: name, numberOfWords: "")
+        let newFolderModel = FolderDataModel(name: name, numberOfWords: 0)
         folderModel.addFolder(newFolderModel)
     }
     

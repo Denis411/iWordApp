@@ -49,7 +49,7 @@ private extension FolderCell {
             HStack {
                 Text(folderModel.name)
                 Spacer()
-                Text(folderModel.numberOfWords)
+                Text(String(folderModel.numberOfWords))
             }
             .font(.system(size: 40))
             .fontWeight(.bold)
@@ -95,7 +95,7 @@ private extension FolderCell {
     let model = FolderDataModel(
         id: .init(),
         name: "Name",
-        numberOfWords: "10"
+        numberOfWords: 10
     )
     FolderCell(
         model,

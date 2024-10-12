@@ -11,11 +11,23 @@
 import Foundation
 
 struct FolderDataModel: Identifiable, Equatable {
-    var id = UUID().uuidString
-    var name: String
-    var numberOfWords: String
+    let id: String
+    private(set) var name: String
+    private(set) var numberOfWords: Int
     
-    init(id: String = UUID().uuidString, name: String, numberOfWords: String) {
+    mutating func changeName(_ newName: String) {
+        self.name = newName
+    }
+    
+    mutating func changeNumberOfWords(_ newNumber: Int) {
+        self.numberOfWords = newNumber
+    }
+    
+    init(
+        id: String = UUID().uuidString,
+        name: String,
+        numberOfWords: Int
+    ) {
         self.id = id
         self.name = name
         self.numberOfWords = numberOfWords
