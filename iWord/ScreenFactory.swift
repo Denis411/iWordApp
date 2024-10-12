@@ -16,9 +16,19 @@ final class ScreenFactory {
     private let folderContentViewModel = FolderContentViewModel(listOfUnits: [.init()])
     private let newLexicalUnitViewModel = NewLexicalUnitViewModel()
     private let cardExerciseViewModel = CardExerciseViewModel(listOfModels: [.init()])
+    private var router: Router?
+    
+    func setRouter(router: Router?) {
+        self.router = router
+    }
     
     func createFolderScreen() -> some View {
-        FolderScreenView(folderScreenViewModel: folderScreenViewModel)
+        guard let router else {
+            fatalError()
+        }
+        return RouterRootView(router: router) {
+            FolderScreenView(folderScreenViewModel: self.folderScreenViewModel)
+        }
     }
     
     func createFolderContentScreen() -> some View {

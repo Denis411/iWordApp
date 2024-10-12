@@ -12,7 +12,14 @@ import SwiftUI
 
 @main
 struct iWordApp: App {
-    private let screenFactory = ScreenFactory()
+    private let router: Router
+    private let screenFactory: ScreenFactory
+    
+    init() {
+        self.screenFactory = ScreenFactory()
+        self.router = Router(screenFactory: screenFactory)
+        screenFactory.setRouter(router: router)
+    }
     
     var body: some Scene {
         WindowGroup {
