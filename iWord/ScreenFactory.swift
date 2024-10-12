@@ -14,7 +14,7 @@ final class ScreenFactory {
     // User DI here
     private var folderScreenViewModel: FolderScreenViewModel?
     private var folderContentViewModel: FolderContentViewModel?
-    private let newLexicalUnitViewModel = NewLexicalUnitViewModel()
+    private var newLexicalUnitViewModel: NewLexicalUnitViewModel?
     private let cardExerciseViewModel = CardExerciseViewModel(listOfModels: [.init()])
     private var router: Router?
     
@@ -33,12 +33,16 @@ final class ScreenFactory {
     }
     
     func createFolderContentScreen(with folderID: String) -> some View {
-        self.folderContentViewModel = FolderContentViewModel(with: folderID)
+        self.folderContentViewModel = FolderContentViewModel(
+            with: folderID,
+            router: router!
+        )
         return FolderContentViewControllerRepresentable(folderContentViewModel: folderContentViewModel!)
     }
     
     func createAddNewLexicalUnitScreen() -> some View {
-        AddNewLexicalUnitView(viewModel: newLexicalUnitViewModel)
+        self.newLexicalUnitViewModel = NewLexicalUnitViewModel()
+        return AddNewLexicalUnitView(viewModel: newLexicalUnitViewModel!)
     }
     
     func createCardExerciseScreen() -> some View {

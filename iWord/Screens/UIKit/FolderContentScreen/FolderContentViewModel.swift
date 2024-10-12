@@ -12,10 +12,15 @@ import Foundation
 
 final class FolderContentViewModel: ObservableObject {
     private let folderID: String
+    private let router: Router
     @Published private(set) var listOfUnits: [LexicalUnit]
     
-    init(with folderID: String) {
+    init(
+        with folderID: String,
+        router: Router
+    ) {
         self.folderID = folderID
+        self.router = router
         // load data for folder id
         self.listOfUnits = []
     }
@@ -29,6 +34,6 @@ final class FolderContentViewModel: ObservableObject {
     }
     
     func openAddNewLexicalUnitScreen() {
-        listOfUnits.append(.init())
+        router.navigateTo(.newLexicalUnitView)
     }
 }
