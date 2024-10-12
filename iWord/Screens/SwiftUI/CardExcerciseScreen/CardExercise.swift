@@ -10,7 +10,7 @@
 
 import SwiftUI
 
-struct CardExercise: View {
+struct CardExerciseView: View {
     @ObservedObject private var cardExerciseViewModel: CardExerciseViewModel
     @State var isInHintState: Bool = false
     @State var rotationAngle: CGFloat = 0
@@ -106,7 +106,7 @@ struct CardExercise: View {
     }
 }
 
-extension CardExercise {
+extension CardExerciseView {
     static let halfScreenWidth = UIScreen.main.bounds.width / 2
     static let maxAngleInDegrees: CGFloat = 45
     
@@ -140,5 +140,5 @@ extension CardExercise {
 
 #Preview {
     
-    CardExercise(cardExerciseViewModel: .init(listOfModels: [.init(), .init()]))
+    CardExerciseView(cardExerciseViewModel: .init(listOfModels: [.init(), .init()]))
 }

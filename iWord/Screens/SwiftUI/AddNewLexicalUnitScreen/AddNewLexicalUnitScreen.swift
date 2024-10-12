@@ -10,7 +10,7 @@
 
 import SwiftUI
 
-struct AddNewLexicalUnitScreen: View {
+struct AddNewLexicalUnitView: View {
     @State var isImagePickerPresented = false
     @State var isAlertPresented = false
     @ObservedObject private var viewModel: NewLexicalUnitViewModel
@@ -105,5 +105,5 @@ struct AddNewLexicalUnitScreen: View {
 }
 
 #Preview {
-    AddNewLexicalUnitScreen(viewModel: .init())
+    AddNewLexicalUnitView(viewModel: .init())
 }

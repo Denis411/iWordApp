@@ -25,10 +25,10 @@ final class ScreenFactory {
     }
     
     func createAddNewLexicalUnitScreen() -> some View {
-        AddNewLexicalUnitScreen(viewModel: newLexicalUnitViewModel)
+        AddNewLexicalUnitView(viewModel: newLexicalUnitViewModel)
     }
     
     func createCardExerciseScreen() -> some View {
-        CardExercise(cardExerciseViewModel: cardExerciseViewModel)
+        CardExerciseView(cardExerciseViewModel: cardExerciseViewModel)
     }
 }
