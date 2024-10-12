@@ -11,10 +11,11 @@
 import SwiftUI
 
 final class ScreenFactory {
+    // User DI here
     private let folderScreenViewModel = FolderScreenViewModel()
-    private let folderContentViewModel = FolderContentViewModel(listOfUnits: [])
+    private let folderContentViewModel = FolderContentViewModel(listOfUnits: [.init()])
     private let newLexicalUnitViewModel = NewLexicalUnitViewModel()
-    private let cardExerciseViewModel = CardExerciseViewModel(listOfModels: [])
+    private let cardExerciseViewModel = CardExerciseViewModel(listOfModels: [.init()])
     
     func createFolderScreen() -> some View {
         FolderScreenView(folderScreenViewModel: folderScreenViewModel)
