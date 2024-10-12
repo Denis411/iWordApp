@@ -11,55 +11,55 @@
 import Combine
 
 final class CardExerciseViewModel: ObservableObject {
-    private var listOfModels: [LexicalUnit]
+    private var listOfLexicalUnits: [LexicalUnit]
     @Published private(set) var currentModel: LexicalUnit
     @Published private(set) var isExerciseCompleted: Bool = false
     private var currentIndex: Int = 0
     
-    init(listOfModels: [LexicalUnit]) {
-        if listOfModels.count == 0 {
+    init(with listOfLexicalUnits: [LexicalUnit]) {
+        if listOfLexicalUnits.count == 0 {
             assertionFailure()
         }
         
-        self.listOfModels = listOfModels
-        self.currentModel = listOfModels[0]
+        self.listOfLexicalUnits = listOfLexicalUnits
+        self.currentModel = listOfLexicalUnits[0]
     }
     
     // User knows the word
     func reactPositively () {
-        guard currentIndex < listOfModels.count else {
+        guard currentIndex < listOfLexicalUnits.count else {
             assertionFailure()
             return
         }
-        listOfModels[currentIndex].increasePercentage(by: 1)
+        listOfLexicalUnits[currentIndex].increasePercentage(by: 1)
         
         currentIndex += 1
         
-        if currentIndex >= listOfModels.count {
+        if currentIndex >= listOfLexicalUnits.count {
             isExerciseCompleted = true
             return
         }
         
-        currentModel = listOfModels[currentIndex]
+        currentModel = listOfLexicalUnits[currentIndex]
     }
     
     // User does not know the word
     func reactNegatively() {
-        guard currentIndex < listOfModels.count,
+        guard currentIndex < listOfLexicalUnits.count,
         isExerciseCompleted != true else {
             assertionFailure()
             return
         }
         
-        listOfModels[currentIndex].decreasePercentage(by: 1)
+        listOfLexicalUnits[currentIndex].decreasePercentage(by: 1)
         
         currentIndex += 1
         
-        if currentIndex >= listOfModels.count {
+        if currentIndex >= listOfLexicalUnits.count {
             isExerciseCompleted = true
             return
         }
-        currentModel = listOfModels[currentIndex]
+        currentModel = listOfLexicalUnits[currentIndex]
     }
     
     func closeExercise() {

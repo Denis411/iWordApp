@@ -13,7 +13,7 @@ import Foundation
 final class FolderContentViewModel: ObservableObject {
     private let folderID: String
     private let router: Router
-    @Published private(set) var listOfUnits: [LexicalUnit]
+    @Published private(set) var listOfLexicalUnits: [LexicalUnit]
     
     init(
         with folderID: String,
@@ -22,11 +22,11 @@ final class FolderContentViewModel: ObservableObject {
         self.folderID = folderID
         self.router = router
         // load data for folder id
-        self.listOfUnits = []
+        self.listOfLexicalUnits = []
     }
     
     func deleteLexicalUnit(at indexPath: IndexPath) {
-        listOfUnits.remove(at: indexPath.row)
+        listOfLexicalUnits.remove(at: indexPath.row)
     }
     
     func didTapLexicalUnit(at indexPath: IndexPath) {
@@ -38,6 +38,6 @@ final class FolderContentViewModel: ObservableObject {
     }
     
     func openCardExerciseScreen() {
-        router.navigateTo(.cardExerciseView)
+        router.navigateTo(.cardExerciseView(listOfLexicalUnits: listOfLexicalUnits))
     }
 }

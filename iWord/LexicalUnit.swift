@@ -12,7 +12,7 @@ import Foundation
 // TODO: - Remove UIKit
 import UIKit
 
-struct LexicalUnit {
+struct LexicalUnit: Hashable {
     private let uuid = UUID().uuidString
     let folderID: String
     let originalWord: String

@@ -26,8 +26,8 @@ final class Router: ObservableObject {
             screenFactory.createFolderContentScreen(with: folderID)
         case .newLexicalUnitView:
             screenFactory.createAddNewLexicalUnitScreen()
-        case .cardExerciseView:
-            screenFactory.createCardExerciseScreen()
+        case .cardExerciseView(let listOfLexicalUnits):
+            screenFactory.createCardExerciseScreen(with: listOfLexicalUnits)
         }
     }
     

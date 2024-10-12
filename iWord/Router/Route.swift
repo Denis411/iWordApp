@@ -15,5 +15,5 @@ import Foundation
 enum Route: Hashable {
     case folderContentView(folderID: String)
     case newLexicalUnitView
-    case cardExerciseView
+    case cardExerciseView(listOfLexicalUnits: [LexicalUnit])
 }

@@ -30,7 +30,7 @@ final class FolderContentViewController: UIViewController {
     
     override func loadView() {
         view = FolderContentView(
-            listOfUnits: folderContentViewModel.listOfUnits,
+            listOfUnits: folderContentViewModel.listOfLexicalUnits,
             startExerciseAction: folderContentViewModel.openCardExerciseScreen,
             addNewLexicalUnitAction: folderContentViewModel.openAddNewLexicalUnitScreen,
             deleteLexicalUnitAction: folderContentViewModel.deleteLexicalUnit(at:),
@@ -38,12 +38,12 @@ final class FolderContentViewController: UIViewController {
         )
         bind()
         // initial update
-        internalView.updateListOfLexicalUnits(folderContentViewModel.listOfUnits)
+        internalView.updateListOfLexicalUnits(folderContentViewModel.listOfLexicalUnits)
     }
     
     private func bind() {
         folderContentViewModel
-            .$listOfUnits
+            .$listOfLexicalUnits
             .receive(on: DispatchQueue.main)
             .sink { newListPublisher in
                 self.internalView.updateListOfLexicalUnits(newListPublisher)
