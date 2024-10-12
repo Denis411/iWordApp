@@ -12,20 +12,19 @@ import SwiftUI
 
 struct RouterRootView<Content: View>: View {
     @StateObject private var router: Router
-    // Our root view content
-    private let content: Content
+    private let rootView: Content
     
     init(
         router: Router,
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder rootView: @escaping () -> Content
     ) {
         _router = StateObject(wrappedValue: router)
-        self.content = content()
+        self.rootView = rootView()
     }
     
     var body: some View {
         NavigationStack(path: $router.path) {
-            content
+            rootView
                 .navigationDestination(for: Route.self) { route in
                     router.view(for: route)
                 }
