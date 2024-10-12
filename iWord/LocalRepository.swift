@@ -20,7 +20,7 @@ protocol FolderModelLocalRepositoryProtocol {
 
 protocol LexicalUnitModelLocalRepositoryProtocol {
     func fetchLexicalUnits(with folderID: String) async throws -> [LexicalUnitDataModel]
-    func deleteLexicalUnit(with uuid: String) throws
+    func deleteLexicalUnit(with uuid: String) async throws
     func updateLexicalUnit(with uuid: String) async throws
 }
 
@@ -45,7 +45,7 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
         []
     }
     
-    func deleteLexicalUnit(with uuid: String) throws {
+    func deleteLexicalUnit(with uuid: String) async throws {
         
     }
     
