@@ -106,7 +106,7 @@ private extension FolderScreenView {
     }
     
     func handleOnFolderTap(_ model: FolderModel.Folder) {
-        folderScreenViewModel.openFolderContent(folderUUID: model.id)
+        folderScreenViewModel.openFolderContent(folderID: model.id)
     }
 }
 
@@ -116,5 +116,5 @@ fileprivate extension FolderScreenView {
 }
 
 #Preview {
-    FolderScreenView(folderScreenViewModel: .init())
+    FolderScreenView(folderScreenViewModel: .init(router: Router(screenFactory: ScreenFactory())))
 }

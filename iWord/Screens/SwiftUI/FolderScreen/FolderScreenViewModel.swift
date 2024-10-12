@@ -14,6 +14,11 @@ final class FolderScreenViewModel: ObservableObject {
     @Published private(set) var folderModel: FolderModel = FolderModel()
     private(set) var folderToDelete: FolderModel.Folder? = nil
     private(set) var folderToEdit: FolderModel.Folder? = nil
+    private let router: Router
+    
+    init(router: Router) {
+        self.router = router
+    }
     
     func addFolder(with name: String) {
         let newFolderModel = FolderModel.Folder(name: name, numberOfWords: "")
@@ -50,7 +55,7 @@ final class FolderScreenViewModel: ObservableObject {
         self.folderModel.editFolderName(model: folderToEdit, newName: name)
     }
     
-    func openFolderContent(folderUUID: String) {
-        
+    func openFolderContent(folderID: String) {
+        router.navigateTo(.folderContentView(folderID: folderID))
     }
 }

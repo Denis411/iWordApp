@@ -13,7 +13,7 @@ import Foundation
 // Contains the possible destinations in our Router
 // Data between views will be passed through repository
 enum Route: Hashable {
-    case folderContentView
+    case folderContentView(folderID: String)
     case newLexicalUnitView
     case cardExerciseView
 }

@@ -12,8 +12,8 @@ import SwiftUI
 
 final class ScreenFactory {
     // User DI here
-    private let folderScreenViewModel = FolderScreenViewModel()
-    private let folderContentViewModel = FolderContentViewModel(listOfUnits: [.init()])
+    private var folderScreenViewModel: FolderScreenViewModel?
+    private var folderContentViewModel: FolderContentViewModel?
     private let newLexicalUnitViewModel = NewLexicalUnitViewModel()
     private let cardExerciseViewModel = CardExerciseViewModel(listOfModels: [.init()])
     private var router: Router?
@@ -26,13 +26,15 @@ final class ScreenFactory {
         guard let router else {
             fatalError()
         }
+        folderScreenViewModel = FolderScreenViewModel(router: router)
         return RouterRootView(router: router) {
-            FolderScreenView(folderScreenViewModel: self.folderScreenViewModel)
+            FolderScreenView(folderScreenViewModel: self.folderScreenViewModel!)
         }
     }
     
-    func createFolderContentScreen() -> some View {
-        FolderContentViewControllerRepresentable(folderContentViewModel: folderContentViewModel)
+    func createFolderContentScreen(with folderID: String) -> some View {
+        self.folderContentViewModel = FolderContentViewModel(with: folderID)
+        return FolderContentViewControllerRepresentable(folderContentViewModel: folderContentViewModel!)
     }
     
     func createAddNewLexicalUnitScreen() -> some View {

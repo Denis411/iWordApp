@@ -114,6 +114,6 @@ extension FolderContentView {
 }
 
 #Preview {
-    let folderVM = FolderContentViewModel(listOfUnits: [.init(), .init(), .init(), .init()])
+    let folderVM = FolderContentViewModel(with: "")
     FolderContentViewController(folderContentViewModel: folderVM)
 }

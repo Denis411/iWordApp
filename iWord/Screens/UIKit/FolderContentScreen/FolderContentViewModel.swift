@@ -11,10 +11,13 @@
 import Foundation
 
 final class FolderContentViewModel: ObservableObject {
+    private let folderID: String
     @Published private(set) var listOfUnits: [LexicalUnit]
     
-    init(listOfUnits: [LexicalUnit]) {
-        self.listOfUnits = listOfUnits
+    init(with folderID: String) {
+        self.folderID = folderID
+        // load data for folder id
+        self.listOfUnits = []
     }
     
     func deleteLexicalUnit(at indexPath: IndexPath) {
