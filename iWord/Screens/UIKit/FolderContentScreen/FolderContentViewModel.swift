@@ -12,7 +12,7 @@ import Foundation
 
 final class FolderContentViewModel: ObservableObject {
     private let folderID: String
-    private let router: Router
+    private let router: RouterProtocol
     @Published private(set) var listOfLexicalUnits: [LexicalUnit]
     
     init(
@@ -34,10 +34,14 @@ final class FolderContentViewModel: ObservableObject {
     }
     
     func openAddNewLexicalUnitScreen() {
-        router.navigateTo(.newLexicalUnitView)
+        Task {
+            await router.navigateTo(.newLexicalUnitView)
+        }
     }
     
     func openCardExerciseScreen() {
-        router.navigateTo(.cardExerciseView(listOfLexicalUnits: listOfLexicalUnits))
+        Task {
+            await router.navigateTo(.cardExerciseView(listOfLexicalUnits: listOfLexicalUnits))
+        }
     }
 }

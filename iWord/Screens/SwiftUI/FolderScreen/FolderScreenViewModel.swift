@@ -14,9 +14,9 @@ final class FolderScreenViewModel: ObservableObject {
     @Published private(set) var folderModel: FolderModel = FolderModel()
     private(set) var folderToDelete: FolderModel.Folder? = nil
     private(set) var folderToEdit: FolderModel.Folder? = nil
-    private let router: Router
+    private let router: RouterProtocol
     
-    init(router: Router) {
+    init(router: RouterProtocol) {
         self.router = router
     }
     
@@ -56,6 +56,8 @@ final class FolderScreenViewModel: ObservableObject {
     }
     
     func openFolderContent(folderID: String) {
-        router.navigateTo(.folderContentView(folderID: folderID))
+        Task {
+            await router.navigateTo(.folderContentView(folderID: folderID))
+        }
     }
 }
