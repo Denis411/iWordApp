@@ -49,4 +49,8 @@ final class FolderScreenViewModel: ObservableObject {
         }
         self.folderModel.editFolderName(model: folderToEdit, newName: name)
     }
+    
+    func openFolderContent(folderUUID: String) {
+        
+    }
 }

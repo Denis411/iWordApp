@@ -76,7 +76,7 @@ private extension FolderScreenView {
                         deleteAction: deleteFolder
                     )
                     .onTapGesture {
-                        handleTap(folderModel)
+                        handleOnFolderTap(folderModel)
                     }
                 }
                 .listRowSeparator(.hidden)
@@ -105,8 +105,8 @@ private extension FolderScreenView {
         isEditAlertShown = true
     }
     
-    func handleTap(_ model: FolderModel.Folder) {
-        print("Hi")
+    func handleOnFolderTap(_ model: FolderModel.Folder) {
+        folderScreenViewModel.openFolderContent(folderUUID: model.id)
     }
 }
 
