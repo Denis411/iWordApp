@@ -14,18 +14,21 @@ import Repository
 final class FolderContentViewModel: ObservableObject {
     private let router: RouterProtocol
     private let localRepository: LexicalUnitModelLocalRepositoryProtocol
+    private let folderID: String
     @Published private(set) var listOfLexicalUnits: [LexicalUnitDataModel]
     @Published private(set) var isEmptyFolderAlertPresented: Bool = false
     
     init(
         listOfLexicalUnits: [LexicalUnitDataModel],
         localRepository: LocalRepositoryProtocol,
+        folderID: String,
         router: Router
     ) {
         self.router = router
         self.localRepository = localRepository
         // load data for folder id
         self.listOfLexicalUnits = listOfLexicalUnits
+        self.folderID = folderID
     }
     
     func deleteLexicalUnit(at indexPath: IndexPath) {
@@ -33,7 +36,7 @@ final class FolderContentViewModel: ObservableObject {
         Task(priority: .utility) {
             try? await localRepository.deleteLexicalUnit(
                 with: listOfLexicalUnits[indexPath.row].uuid,
-                with: listOfLexicalUnits[indexPath.row].folderID
+                with: folderID
             )
         }
     }
@@ -44,7 +47,7 @@ final class FolderContentViewModel: ObservableObject {
     
     func openAddNewLexicalUnitScreen() {
         Task {
-            await router.navigateTo(.newLexicalUnitView)
+            await router.navigateTo(.newLexicalUnitView(folderID: folderID))
         }
     }
     

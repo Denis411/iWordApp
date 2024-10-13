@@ -41,17 +41,21 @@ final class ScreenFactory {
         }
     }
     
-    func createFolderContentScreen(listOfLexicalUnits: [LexicalUnitDataModel]) -> some View {
+    func createFolderContentScreen(listOfLexicalUnits: [LexicalUnitDataModel], folderID: String) -> some View {
         self.folderContentViewModel = FolderContentViewModel(
             listOfLexicalUnits: listOfLexicalUnits,
             localRepository: localRepository,
+            folderID: folderID,
             router: router
         )
         return FolderContentSwiftUIContainerView(folderContentViewModel: folderContentViewModel!)
     }
     
-    func createAddNewLexicalUnitScreen() -> some View {
-        self.newLexicalUnitViewModel = NewLexicalUnitViewModel()
+    func createAddNewLexicalUnitScreen(folderID: String) -> some View {
+        self.newLexicalUnitViewModel = NewLexicalUnitViewModel(
+            folderId: folderID,
+            localRepository: localRepository
+        )
         return AddNewLexicalUnitView(viewModel: newLexicalUnitViewModel!)
     }
     

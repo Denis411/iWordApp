@@ -93,7 +93,12 @@ final class FolderScreenViewModel: ObservableObject {
     func openFolderContent(folderID: String) {
         Task(priority: .userInitiated) {
             let lexicalUnits = try? await localRepository.fetchLexicalUnits(with: folderID)
-            await router.navigateTo(.folderContentView(listOfLexicalUnits: lexicalUnits ?? []))
+            await router.navigateTo(
+                .folderContentView(
+                    listOfLexicalUnits: lexicalUnits ?? [],
+                    folderID: folderID
+                )
+            )
         }
     }
 }

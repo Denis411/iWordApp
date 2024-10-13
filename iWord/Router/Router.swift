@@ -24,10 +24,10 @@ final class Router: ObservableObject {
     @ViewBuilder
     func view(for route: Route) -> some View {
         switch route {
-        case .folderContentView(let listOfLexicalUnits):
-            screenFactory?.createFolderContentScreen(listOfLexicalUnits: listOfLexicalUnits)
-        case .newLexicalUnitView:
-            screenFactory?.createAddNewLexicalUnitScreen()
+        case .folderContentView(let listOfLexicalUnits, let folderID):
+            screenFactory?.createFolderContentScreen(listOfLexicalUnits: listOfLexicalUnits, folderID: folderID)
+        case .newLexicalUnitView(let folderID):
+            screenFactory?.createAddNewLexicalUnitScreen(folderID: folderID)
         case .cardExerciseView(let listOfLexicalUnits):
             screenFactory?.createCardExerciseScreen(with: listOfLexicalUnits)
         }

@@ -104,6 +104,15 @@ struct AddNewLexicalUnitView: View {
     }
 }
 
+import Repository
+
 #Preview {
-    AddNewLexicalUnitView(viewModel: .init())
+    let localRepository = LocalRepositoryFactory.create()
+    
+    return AddNewLexicalUnitView(
+        viewModel: .init(
+            folderId: " ",
+            localRepository: localRepository
+        )
+    )
 }

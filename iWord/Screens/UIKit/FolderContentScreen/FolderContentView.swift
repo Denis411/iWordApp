@@ -164,6 +164,7 @@ extension FolderContentView {
     let folderVM = FolderContentViewModel(
         listOfLexicalUnits: [],
         localRepository: repo,
+        folderID: "",
         router: router
     )
     

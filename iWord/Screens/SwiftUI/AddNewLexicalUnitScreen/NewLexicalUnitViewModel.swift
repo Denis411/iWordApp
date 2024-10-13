@@ -9,11 +9,22 @@
 // University website: https://tambovstateuniversity.org 
 
 import Foundation
+import Repository
 
 final class NewLexicalUnitViewModel: ObservableObject {
+    private let folderId: String
+    private let localRepository: LexicalUnitModelLocalRepositoryProtocol
     @Published var originalLexicalUnit: String = ""
     @Published var translation: String = ""
     @Published var pickedImage: Data? = nil
+    
+    init(
+        folderId: String,
+        localRepository: LexicalUnitModelLocalRepositoryProtocol
+    ) {
+        self.folderId = folderId
+        self.localRepository = localRepository
+    }
     
     @MainActor func nullifyPickedImage() {
         self.pickedImage = nil
