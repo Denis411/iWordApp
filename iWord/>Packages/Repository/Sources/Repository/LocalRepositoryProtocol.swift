@@ -20,6 +20,13 @@ public protocol FolderModelLocalRepositoryProtocol {
 }
 
 public protocol LexicalUnitModelLocalRepositoryProtocol {
+    func saveLexicalUnit(
+        folderID: String,
+        originalWord: String,
+        mainTranslation: String,
+        completionPercentage: UInt8,
+        pngImageData: Data?
+    ) async throws
     func fetchLexicalUnits(with folderID: String) async throws -> [LexicalUnitDataModel]
     func deleteLexicalUnit(with uuid: String, with folderID: String) async throws
     func updateLexicalUnit(with uuid: String, with folderID: String, newValue: LexicalUnitDataModel) async throws

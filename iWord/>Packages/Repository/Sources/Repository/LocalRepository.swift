@@ -57,6 +57,30 @@ actor LocalRepository: FolderModelLocalRepositoryProtocol {
 }
 
 extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
+    func saveLexicalUnit(
+        folderID: String,
+        originalWord: String,
+        mainTranslation: String,
+        completionPercentage: UInt8,
+        pngImageData: Data?
+    ) async throws {
+        let folderKey = data.keys.first { $0.id == folderID }
+        guard let folderKey else {
+            throw LocalRepositoryError.keyDoseNotExist
+        }
+        
+        let newLexicalUnit = LexicalUnitDataModel(
+            uuid: UUID().uuidString,
+            folderID: folderID,
+            originalWord: originalWord,
+            mainTranslation: mainTranslation,
+            completionPercentage: completionPercentage,
+            pngImageData: pngImageData
+        )
+        
+        data[folderKey]?.append(newLexicalUnit)
+    }
+    
     func fetchLexicalUnits(with folderID: String) async throws -> [LexicalUnitDataModel] {
        let dictionaryKey = data.keys.first { folderModel in
             folderModel.id == folderID

@@ -13,7 +13,7 @@ import Foundation
 import UIKit
 
 public struct LexicalUnitDataModel: Hashable, Sendable {
-    public let uuid = UUID().uuidString
+    public let uuid: String
     public let folderID: String
     public let originalWord: String
     public let mainTranslation: String
@@ -21,12 +21,14 @@ public struct LexicalUnitDataModel: Hashable, Sendable {
     public let pngImageData: Data?
     
     init(
+        uuid: String,
         folderID: String,
         originalWord: String,
         mainTranslation: String,
         completionPercentage: UInt8,
         pngImageData: Data?
     ) {
+        self.uuid = uuid
         self.folderID = folderID
         self.originalWord = originalWord
         self.mainTranslation = mainTranslation
@@ -51,8 +53,9 @@ extension LexicalUnitDataModel: Equatable {
 
 // FIXME: - create debug schema
 public extension LexicalUnitDataModel {
-    public static func previewMock() -> Self {
+    static func previewMock() -> Self {
         LexicalUnitDataModel(
+            uuid: UUID().uuidString,
             folderID: "Mock folder",
             originalWord: "Cat",
             mainTranslation: "Кот",
