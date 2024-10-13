@@ -30,7 +30,12 @@ final class ScreenFactory {
     }
     
     func createFolderScreen() -> some View {
-        folderScreenViewModel = FolderScreenViewModel(router: router)
+        folderScreenViewModel = FolderScreenViewModel(
+            router: router,
+            localRepository: localRepository,
+            initialFolders: []
+        )
+        
         return RouterRootView(router: router) {
             FolderScreenView(folderScreenViewModel: self.folderScreenViewModel!)
         }

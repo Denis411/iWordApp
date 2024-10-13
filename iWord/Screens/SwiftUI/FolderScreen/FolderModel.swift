@@ -12,7 +12,15 @@ import Foundation
 import Repository
 
 struct FolderModel {
-    var listOfFolders: [FolderDataModel] = []
+    var listOfFolders: [FolderDataModel]
+    
+    init(listOfFolders: [FolderDataModel]) {
+        self.listOfFolders = listOfFolders
+    }
+    
+    mutating func updateListOfFolders(_ listOfFolders: [FolderDataModel]) {
+        self.listOfFolders = listOfFolders
+    }
     
     mutating func addFolder(_ folder: FolderDataModel) {
         self.listOfFolders.append(folder)

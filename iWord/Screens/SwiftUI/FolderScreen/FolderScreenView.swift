@@ -122,6 +122,12 @@ fileprivate extension FolderScreenView {
     let repo = LocalRepositoryFactory.create()
     let screenFactory = ScreenFactory(router: router, localRepository: repo)
     router.setScreenFactory(screenFactory)
+    
+    let viewModel: FolderScreenViewModel = .init(
+        router: router,
+        localRepository: repo,
+        initialFolders: []
+    )
 
-    return FolderScreenView(folderScreenViewModel: .init(router: router))
+    return FolderScreenView(folderScreenViewModel: viewModel)
 }

@@ -12,20 +12,43 @@ import Combine
 import Repository
 
 final class FolderScreenViewModel: ObservableObject {
-    @Published private(set) var folderModel: FolderModel = FolderModel()
+    private let router: RouterProtocol
+    private let localRepository: LocalRepositoryProtocol
+    
+    @Published private(set) var folderModel: FolderModel
     private(set) var folderToDelete: FolderDataModel? = nil
     private(set) var folderToEdit: FolderDataModel? = nil
-    private let router: RouterProtocol
     
-    init(router: RouterProtocol) {
+    init(
+        router: RouterProtocol,
+        localRepository: LocalRepositoryProtocol,
+        initialFolders: [FolderDataModel]
+    ) {
         self.router = router
+        self.localRepository = localRepository
+        self.folderModel = FolderModel(listOfFolders: initialFolders)
+        
+        Task(priority: .userInitiated) {
+            // show spinner
+            do {
+                let previouslySavedFolders = try await self.localRepository.fetchFolders()
+                folderModel.updateListOfFolders(previouslySavedFolders)
+            } catch { }
+            // hide spinner
+        }
     }
     
     func addFolder(with name: String) {
         let newFolderModel = FolderDataModel(name: name, numberOfWords: 0)
         folderModel.addFolder(newFolderModel)
+        Task(priority: .utility) {
+            do {
+                try await localRepository.createEmptyFolder(with: name)
+            } catch {
+                // handle error
+            }
+        }
     }
-    
     
     // set folder before deleting
     // this wired way is used because of SwiftUI alert limitations
@@ -49,11 +72,22 @@ final class FolderScreenViewModel: ObservableObject {
     }
     
     func setNewNameForFolder(name: String) {
-        guard let folderToEdit else {
+        guard var folderToEdit else {
             assertionFailure()
             return
         }
+        
+        // FIXME: - You do not need to use a new name here, just update the folderToEdit
         self.folderModel.editFolderName(model: folderToEdit, newName: name)
+        
+        Task(priority: .utility) {
+            do {
+                folderToEdit.changeName(name)
+                try await localRepository.updateFolder(folderModel: folderToEdit)
+            } catch {
+                // show error alert
+            }
+        }
     }
     
     func openFolderContent(folderID: String) {
