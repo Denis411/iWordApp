@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct FolderDataModel: Identifiable, Equatable {
+struct FolderDataModel: Identifiable{
     let id: String
     private(set) var name: String
     private(set) var numberOfWords: Int
@@ -31,5 +31,15 @@ struct FolderDataModel: Identifiable, Equatable {
         self.id = id
         self.name = name
         self.numberOfWords = numberOfWords
+    }
+}
+
+extension FolderDataModel: Equatable, Hashable  {
+    static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
     }
 }
