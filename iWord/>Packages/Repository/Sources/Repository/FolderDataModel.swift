@@ -11,19 +11,19 @@
 import Foundation
 
 public struct FolderDataModel: Identifiable, Sendable {
-    let id: String
-    private(set) var name: String
-    private(set) var numberOfWords: Int
+    public let id: String
+    public private(set) var name: String
+    public private(set) var numberOfWords: Int
     
-    mutating func changeName(_ newName: String) {
+    public mutating func changeName(_ newName: String) {
         self.name = newName
     }
     
-    mutating func changeNumberOfWords(_ newNumber: Int) {
+    public mutating func changeNumberOfWords(_ newNumber: Int) {
         self.numberOfWords = newNumber
     }
     
-    init(
+    public init(
         id: String = UUID().uuidString,
         name: String,
         numberOfWords: Int
@@ -35,11 +35,11 @@ public struct FolderDataModel: Identifiable, Sendable {
 }
 
 extension FolderDataModel: Equatable, Hashable  {
-    static func ==(lhs: Self, rhs: Self) -> Bool {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(self.id)
     }
 }

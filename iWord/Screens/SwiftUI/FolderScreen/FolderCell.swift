@@ -9,6 +9,7 @@
 // University website: https://tambovstateuniversity.org 
 
 import SwiftUI
+import Repository
 
 struct FolderCell: View {
     private let folderModel: FolderDataModel

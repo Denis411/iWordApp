@@ -10,6 +10,7 @@
 
 import UIKit
 import SnapKit
+import Repository
 
 final class LexicalUnitCell: UITableViewCell {
     private var lexicalUnit: LexicalUnitDataModel?

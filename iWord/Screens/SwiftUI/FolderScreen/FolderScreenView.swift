@@ -94,6 +94,8 @@ private extension FolderScreenView {
     }
 }
 
+import Repository
+
 private extension FolderScreenView {
     func deleteFolder(_ model: FolderDataModel) {
         folderScreenViewModel.setFolderToDelete(model)

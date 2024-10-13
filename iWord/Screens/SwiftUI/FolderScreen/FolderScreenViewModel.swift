@@ -9,6 +9,7 @@
 // University website: https://tambovstateuniversity.org 
 
 import Combine
+import Repository
 
 final class FolderScreenViewModel: ObservableObject {
     @Published private(set) var folderModel: FolderModel = FolderModel()

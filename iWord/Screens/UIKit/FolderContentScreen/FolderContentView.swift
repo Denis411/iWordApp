@@ -10,6 +10,7 @@
 
 import UIKit
 import SnapKit
+import Repository
 
 final class FolderContentView: UIView {
     private var listOfUnits: [LexicalUnitDataModel]

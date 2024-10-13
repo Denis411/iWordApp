@@ -9,6 +9,7 @@
 // University website: https://tambovstateuniversity.org 
 
 import Combine
+import Repository
 
 final class CardExerciseViewModel: ObservableObject {
     private var listOfLexicalUnits: [LexicalUnitDataModel]

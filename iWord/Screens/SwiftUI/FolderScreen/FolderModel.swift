@@ -9,6 +9,7 @@
 // University website: https://tambovstateuniversity.org 
 
 import Foundation
+import Repository
 
 struct FolderModel {
     var listOfFolders: [FolderDataModel] = []

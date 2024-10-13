@@ -9,6 +9,7 @@
 // University website: https://tambovstateuniversity.org 
 
 import Foundation
+import Repository
 
 final class FolderContentViewModel: ObservableObject {
     private let folderID: String

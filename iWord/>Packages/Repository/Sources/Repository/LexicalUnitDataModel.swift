@@ -12,13 +12,13 @@ import Foundation
 // TODO: - Remove UIKit
 import UIKit
 
-struct LexicalUnitDataModel: Hashable {
-    let uuid = UUID().uuidString
-    let folderID: String
-    let originalWord: String
-    let mainTranslation: String
-    var completionPercentage: UInt8
-    let pngImageData: Data?
+public struct LexicalUnitDataModel: Hashable, Sendable {
+    public let uuid = UUID().uuidString
+    public let folderID: String
+    public let originalWord: String
+    public let mainTranslation: String
+    public var completionPercentage: UInt8
+    public let pngImageData: Data?
     
     init(
         folderID: String,
@@ -34,24 +34,24 @@ struct LexicalUnitDataModel: Hashable {
         self.pngImageData = pngImageData
     }
     
-    mutating func increasePercentage(by percent: UInt8) {
+    public mutating func increasePercentage(by percent: UInt8) {
         completionPercentage += percent
     }
     
-    mutating func decreasePercentage(by percent: UInt8) {
+    public mutating func decreasePercentage(by percent: UInt8) {
         completionPercentage -= percent
     }
 }
 
 extension LexicalUnitDataModel: Equatable {
-    static func ==(lhs: Self, rhs: Self) -> Bool {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.uuid == rhs.uuid
     }
 }
 
 // FIXME: - create debug schema
 extension LexicalUnitDataModel {
-    static func previewMock() -> Self {
+    public static func previewMock() -> Self {
         LexicalUnitDataModel(
             folderID: "Mock folder",
             originalWord: "Cat",

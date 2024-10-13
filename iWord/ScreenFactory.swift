@@ -9,6 +9,7 @@
 // University website: https://tambovstateuniversity.org 
 
 import SwiftUI
+import Repository
 
 final class ScreenFactory {
     // User DI here

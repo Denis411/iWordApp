@@ -9,6 +9,7 @@
 // University website: https://tambovstateuniversity.org 
 
 import Foundation
+import Repository
 
 // Contains the possible destinations in our Router
 // Data between views will be passed through repository

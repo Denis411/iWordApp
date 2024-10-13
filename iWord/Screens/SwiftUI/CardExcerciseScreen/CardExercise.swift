@@ -138,6 +138,8 @@ extension CardExerciseView {
     }
 }
 
+import Repository
+
 #Preview {
     let listOfLexicalUnits: [LexicalUnitDataModel] = [.previewMock(), .previewMock()]
     CardExerciseView(cardExerciseViewModel: .init(with: listOfLexicalUnits))

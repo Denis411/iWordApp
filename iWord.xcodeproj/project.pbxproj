@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4B771EDE2CB55C300010A256 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B771EDD2CB55C300010A256 /* SnapKit */; };
+		4B7720082CBB857E0010A256 /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 4B7720072CBB857E0010A256 /* Repository */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B7720082CBB857E0010A256 /* Repository in Frameworks */,
 				4B771EDE2CB55C300010A256 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				4B3289A92CB3D08200794936 /* iWord */,
+				4B7720062CBB857E0010A256 /* Frameworks */,
 				4B3289A82CB3D08200794936 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,6 +64,13 @@
 				4B3289A72CB3D08200794936 /* iWord.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4B7720062CBB857E0010A256 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,6 +94,7 @@
 			name = iWord;
 			packageProductDependencies = (
 				4B771EDD2CB55C300010A256 /* SnapKit */,
+				4B7720072CBB857E0010A256 /* Repository */,
 			);
 			productName = iWord;
 			productReference = 4B3289A72CB3D08200794936 /* iWord.app */;
@@ -369,6 +380,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4B771EDC2CB55C300010A256 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		4B7720072CBB857E0010A256 /* Repository */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Repository;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
