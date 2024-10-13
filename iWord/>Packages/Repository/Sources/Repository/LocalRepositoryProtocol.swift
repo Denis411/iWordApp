@@ -13,6 +13,7 @@ import Foundation
 public typealias LocalRepositoryProtocol = FolderModelLocalRepositoryProtocol & LexicalUnitModelLocalRepositoryProtocol
 
 public protocol FolderModelLocalRepositoryProtocol {
+    func createEmptyFolder(with name: String) async throws 
     func fetchFolders() async throws -> [FolderDataModel]
     func deleteFolder(uuid: String) async throws
     func updateFolder(folderModel: FolderDataModel) async throws

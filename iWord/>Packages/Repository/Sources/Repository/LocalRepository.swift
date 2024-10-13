@@ -24,6 +24,11 @@ actor LocalRepository: FolderModelLocalRepositoryProtocol {
         // safe cashed changes in a thread safe manner
     }
     
+    func createEmptyFolder(with name: String) async throws {
+        let folderModel = FolderDataModel(name: name, numberOfWords: 0)
+        data[folderModel] = .some([])
+    }
+    
     func fetchFolders() async throws -> [FolderDataModel] {
          Array(data.keys)
     }

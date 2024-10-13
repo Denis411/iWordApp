@@ -50,7 +50,7 @@ extension LexicalUnitDataModel: Equatable {
 }
 
 // FIXME: - create debug schema
-extension LexicalUnitDataModel {
+public extension LexicalUnitDataModel {
     public static func previewMock() -> Self {
         LexicalUnitDataModel(
             folderID: "Mock folder",
