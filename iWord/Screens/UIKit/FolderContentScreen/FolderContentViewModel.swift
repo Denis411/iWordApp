@@ -14,6 +14,7 @@ final class FolderContentViewModel: ObservableObject {
     private let folderID: String
     private let router: RouterProtocol
     @Published private(set) var listOfLexicalUnits: [LexicalUnitDataModel]
+    @Published private(set) var isEmptyFolderAlertPresented: Bool = false
     
     init(
         with folderID: String,
@@ -40,8 +41,17 @@ final class FolderContentViewModel: ObservableObject {
     }
     
     func openCardExerciseScreen() {
+        guard listOfLexicalUnits.count > 0 else {
+            isEmptyFolderAlertPresented = true
+            self.objectWillChange.send()
+            return
+        }
         Task {
             await router.navigateTo(.cardExerciseView(listOfLexicalUnits: listOfLexicalUnits))
         }
+    }
+    
+    func setEmptyFolderAlert(isPresented: Bool) {
+        self.isEmptyFolderAlertPresented = isPresented
     }
 }

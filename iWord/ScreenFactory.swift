@@ -38,7 +38,7 @@ final class ScreenFactory {
             with: folderID,
             router: router!
         )
-        return FolderContentViewControllerRepresentable(folderContentViewModel: folderContentViewModel!)
+        return FolderContentSwiftUIContainerView(folderContentViewModel: folderContentViewModel!)
     }
     
     func createAddNewLexicalUnitScreen() -> some View {

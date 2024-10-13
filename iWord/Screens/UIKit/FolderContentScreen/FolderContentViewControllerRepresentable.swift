@@ -10,7 +10,35 @@
 
 import SwiftUI
 
-struct FolderContentViewControllerRepresentable: UIViewControllerRepresentable {
+// Used purely for alert purposes
+// because it is difficult to implement a SwiftUI alert in a UIViewControllerRepresentable
+// a god idea would be to relocate alert logic to router
+struct FolderContentSwiftUIContainerView: View {
+    @ObservedObject private var folderContentViewModel: FolderContentViewModel
+    
+    init(folderContentViewModel: FolderContentViewModel) {
+        self.folderContentViewModel = folderContentViewModel
+    }
+    
+    var body: some View {
+        FolderContentViewControllerRepresentable(folderContentViewModel: folderContentViewModel)
+            .alert(
+                "You do not have lexical units in this folder to exercise with.",
+                isPresented: Binding(
+                    get: {
+                        folderContentViewModel.isEmptyFolderAlertPresented
+                    },
+                    set: { newValue in
+                        folderContentViewModel.setEmptyFolderAlert(isPresented: newValue)
+                    }
+                )
+            ) {
+                Button("Ok", role: .cancel) { }
+            }
+    }
+}
+
+private struct FolderContentViewControllerRepresentable: UIViewControllerRepresentable {
     @ObservedObject private var folderContentViewModel: FolderContentViewModel
     
     init(folderContentViewModel: FolderContentViewModel) {
@@ -22,6 +50,7 @@ struct FolderContentViewControllerRepresentable: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: FolderContentViewController, context: Context) {
+        print("Updated")
     }
 }
 
