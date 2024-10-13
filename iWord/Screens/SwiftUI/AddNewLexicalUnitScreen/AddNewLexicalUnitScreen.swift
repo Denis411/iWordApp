@@ -108,10 +108,12 @@ import Repository
 
 #Preview {
     let localRepository = LocalRepositoryFactory.create()
+    let router = Router()
     
     return AddNewLexicalUnitView(
         viewModel: .init(
             folderId: " ",
+            router: router,
             localRepository: localRepository
         )
     )

@@ -13,6 +13,7 @@ import Repository
 
 final class NewLexicalUnitViewModel: ObservableObject {
     private let folderId: String
+    private let router: Router
     private let localRepository: LexicalUnitModelLocalRepositoryProtocol
     @Published var originalLexicalUnit: String = ""
     @Published var translation: String = ""
@@ -20,9 +21,11 @@ final class NewLexicalUnitViewModel: ObservableObject {
     
     init(
         folderId: String,
+        router: Router,
         localRepository: LexicalUnitModelLocalRepositoryProtocol
     ) {
         self.folderId = folderId
+        self.router = router
         self.localRepository = localRepository
     }
     
@@ -31,6 +34,21 @@ final class NewLexicalUnitViewModel: ObservableObject {
     }
     
     func saveLexicalUnit() {
+        guard originalLexicalUnit != "", translation != "" else {
+            // show alert
+            return
+        }
         
+        Task(priority: .userInitiated) {
+            try? await localRepository.saveLexicalUnit(
+                folderID: folderId,
+                originalWord: originalLexicalUnit,
+                mainTranslation: translation,
+                completionPercentage: 0,
+                pngImageData: pickedImage
+            )
+            
+            await router.navigateBack()
+        }
     }
 }

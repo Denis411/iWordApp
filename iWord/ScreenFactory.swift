@@ -54,6 +54,7 @@ final class ScreenFactory {
     func createAddNewLexicalUnitScreen(folderID: String) -> some View {
         self.newLexicalUnitViewModel = NewLexicalUnitViewModel(
             folderId: folderID,
+            router: router,
             localRepository: localRepository
         )
         return AddNewLexicalUnitView(viewModel: newLexicalUnitViewModel!)
