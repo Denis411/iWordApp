@@ -156,9 +156,15 @@ extension FolderContentView {
 }
 
 #Preview {
+    let router = Router()
+    let repo = LocalRepositoryFactory.create()
+    let screenFactory = ScreenFactory(router: router, localRepository: repo)
+    router.setScreenFactory(screenFactory)
+    
     let folderVM = FolderContentViewModel(
         with: "",
-        router: Router(screenFactory: ScreenFactory())
+        router: router
     )
-    FolderContentViewController(folderContentViewModel: folderVM)
+    
+    return FolderContentViewController(folderContentViewModel: folderVM)
 }
