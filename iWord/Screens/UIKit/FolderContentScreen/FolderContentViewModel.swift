@@ -12,23 +12,30 @@ import Foundation
 import Repository
 
 final class FolderContentViewModel: ObservableObject {
-    private let folderID: String
     private let router: RouterProtocol
+    private let localRepository: LexicalUnitModelLocalRepositoryProtocol
     @Published private(set) var listOfLexicalUnits: [LexicalUnitDataModel]
     @Published private(set) var isEmptyFolderAlertPresented: Bool = false
     
     init(
-        with folderID: String,
+        listOfLexicalUnits: [LexicalUnitDataModel],
+        localRepository: LocalRepositoryProtocol,
         router: Router
     ) {
-        self.folderID = folderID
         self.router = router
+        self.localRepository = localRepository
         // load data for folder id
-        self.listOfLexicalUnits = []
+        self.listOfLexicalUnits = listOfLexicalUnits
     }
     
     func deleteLexicalUnit(at indexPath: IndexPath) {
         listOfLexicalUnits.remove(at: indexPath.row)
+        Task(priority: .utility) {
+            try? await localRepository.deleteLexicalUnit(
+                with: listOfLexicalUnits[indexPath.row].uuid,
+                with: listOfLexicalUnits[indexPath.row].folderID
+            )
+        }
     }
     
     func didTapLexicalUnit(at indexPath: IndexPath) {

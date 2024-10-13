@@ -14,7 +14,7 @@ import Repository
 // Contains the possible destinations in our Router
 // Data between views will be passed through repository
 enum Route: Hashable {
-    case folderContentView(folderID: String)
+    case folderContentView(listOfLexicalUnits: [LexicalUnitDataModel])
     case newLexicalUnitView
     case cardExerciseView(listOfLexicalUnits: [LexicalUnitDataModel])
 }

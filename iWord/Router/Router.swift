@@ -24,8 +24,8 @@ final class Router: ObservableObject {
     @ViewBuilder
     func view(for route: Route) -> some View {
         switch route {
-        case .folderContentView(let folderID):
-            screenFactory?.createFolderContentScreen(with: folderID)
+        case .folderContentView(let listOfLexicalUnits):
+            screenFactory?.createFolderContentScreen(listOfLexicalUnits: listOfLexicalUnits)
         case .newLexicalUnitView:
             screenFactory?.createAddNewLexicalUnitScreen()
         case .cardExerciseView(let listOfLexicalUnits):

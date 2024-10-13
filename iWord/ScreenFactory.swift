@@ -41,9 +41,10 @@ final class ScreenFactory {
         }
     }
     
-    func createFolderContentScreen(with folderID: String) -> some View {
+    func createFolderContentScreen(listOfLexicalUnits: [LexicalUnitDataModel]) -> some View {
         self.folderContentViewModel = FolderContentViewModel(
-            with: folderID,
+            listOfLexicalUnits: listOfLexicalUnits,
+            localRepository: localRepository,
             router: router
         )
         return FolderContentSwiftUIContainerView(folderContentViewModel: folderContentViewModel!)
