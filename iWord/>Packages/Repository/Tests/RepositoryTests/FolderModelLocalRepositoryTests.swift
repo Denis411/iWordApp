@@ -4,8 +4,15 @@ import Testing
 @Suite("Tests FolderModelLocalRepositoryProtocol")
 struct FolderModelLocalRepositoryTests {
     
+    private let repository: FolderModelLocalRepositoryProtocol
+    
+    // works like a set up method
+    // deinit works like a tear down method
+    init() {
+        self.repository = LocalRepository()
+    }
+    
     @Test func testSavingFolder() async throws {
-        let repository: FolderModelLocalRepositoryProtocol = LocalRepository()
         let folderName = "TestName"
         try await repository.createEmptyFolder(with: folderName)
         
@@ -16,7 +23,6 @@ struct FolderModelLocalRepositoryTests {
     }
     
     @Test func testFetchingAllFolders() async throws {
-        let repository: FolderModelLocalRepositoryProtocol = LocalRepository()
         let numOfFolders = 10
         
         for i in 0..<numOfFolders {
@@ -28,7 +34,6 @@ struct FolderModelLocalRepositoryTests {
     }
     
     @Test func testDeletingFolder() async throws {
-        let repository: FolderModelLocalRepositoryProtocol = LocalRepository()
         let folderName = "TestName"
         try await repository.createEmptyFolder(with: folderName)
         let allFolders = try #require(await repository.fetchFolders())
@@ -41,7 +46,6 @@ struct FolderModelLocalRepositoryTests {
     }
     
     @Test func testUpdatingFolder() async throws {
-        let repository: FolderModelLocalRepositoryProtocol = LocalRepository()
         // save folder first
         let folderName = "FolderName"
         try #require(await repository.createEmptyFolder(with: folderName))
