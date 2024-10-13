@@ -1,4 +1,5 @@
 import Testing
+import Foundation
 @testable import Repository
 
 @Suite("Tests FolderModelLocalRepositoryProtocol")
@@ -14,7 +15,7 @@ struct FolderModelLocalRepositoryTests {
     
     @Test func testSavingFolder() async throws {
         let folderName = "TestName"
-        try await repository.createEmptyFolder(with: folderName)
+        try await repository.createEmptyFolder(with: folderName, uuid: UUID().uuidString)
         
         let allFolders = try await repository.fetchFolders()
         let firstFolder = allFolders.first
@@ -26,7 +27,7 @@ struct FolderModelLocalRepositoryTests {
         let numOfFolders = 10
         
         for i in 0..<numOfFolders {
-            try await repository.createEmptyFolder(with: "Folder \(i)")
+            try await repository.createEmptyFolder(with: "Folder \(i)", uuid: UUID().uuidString)
         }
         
         let allFolders = try #require(await repository.fetchFolders())
@@ -35,7 +36,7 @@ struct FolderModelLocalRepositoryTests {
     
     @Test func testDeletingFolder() async throws {
         let folderName = "TestName"
-        try await repository.createEmptyFolder(with: folderName)
+        try await repository.createEmptyFolder(with: folderName, uuid: UUID().uuidString)
         let allFolders = try #require(await repository.fetchFolders())
         let firstFolder = try #require(allFolders.first)
         let uuidToDelete = try #require(firstFolder.id)
@@ -48,7 +49,7 @@ struct FolderModelLocalRepositoryTests {
     @Test func testUpdatingFolder() async throws {
         // save folder first
         let folderName = "FolderName"
-        try #require(await repository.createEmptyFolder(with: folderName))
+        try #require(await repository.createEmptyFolder(with: folderName, uuid: UUID().uuidString))
         // fetch folder to get id
         let allFolders = try #require(await repository.fetchFolders())
         let folderID = try #require(allFolders.first?.id)

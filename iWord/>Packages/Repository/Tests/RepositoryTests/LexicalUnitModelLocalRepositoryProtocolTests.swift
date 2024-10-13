@@ -11,7 +11,7 @@ import Foundation
     
     @Test func testSavingLexicalUnit() async throws {
         let repository = LocalRepository()
-        try await repository.createEmptyFolder(with: folderName)
+        try await repository.createEmptyFolder(with: folderName, uuid: UUID().uuidString)
         let folder = await repository.data.keys.first(where: { $0.name == folderName} )
         
         try await repository.saveLexicalUnit(
@@ -29,7 +29,7 @@ import Foundation
     
     @Test func testDeletingLexicalUnit() async throws {
         let repository = LocalRepository()
-        try await repository.createEmptyFolder(with: folderName)
+        try await repository.createEmptyFolder(with: folderName, uuid: UUID().uuidString)
         let folder = await repository.data.keys.first(where: { $0.name == folderName} )
         
         try await repository.saveLexicalUnit(
@@ -61,7 +61,7 @@ import Foundation
     
     @Test func testUpdatingLexicalUnit() async throws {
         let repository = LocalRepository()
-        try await repository.createEmptyFolder(with: folderName)
+        try await repository.createEmptyFolder(with: folderName, uuid: UUID().uuidString)
         let folderId = try #require(await repository.data.keys.first?.id)
         try await repository.saveLexicalUnit(
             folderID: folderId,
