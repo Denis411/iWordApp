@@ -14,9 +14,22 @@
 		4B3289A72CB3D08200794936 /* iWord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4B7720052CBB83940010A256 /* Exceptions for "iWord" folder in "iWord" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				">Packages/Repository",
+			);
+			target = 4B3289A62CB3D08200794936 /* iWord */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4B3289A92CB3D08200794936 /* iWord */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4B7720052CBB83940010A256 /* Exceptions for "iWord" folder in "iWord" target */,
+			);
 			path = iWord;
 			sourceTree = "<group>";
 		};
