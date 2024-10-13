@@ -103,9 +103,15 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
             throw LocalRepositoryError.keyDoseNotExist
         }
         
-        data[folderKey]?.removeAll(where: { lexicalUnitModel in
-            lexicalUnitModel.folderID == uuid
+        guard var oldValue = data[folderKey] else {
+            throw LocalRepositoryError.keyDoseNotExist
+        }
+        
+        oldValue.removeAll(where: { lexicalUnitModel in
+            lexicalUnitModel.folderID == folderID
         })
+        
+        data.updateValue(oldValue, forKey: folderKey)
     }
     
     func updateLexicalUnit(with uuid: String, with folderID: String, newValue: LexicalUnitDataModel) async throws {
