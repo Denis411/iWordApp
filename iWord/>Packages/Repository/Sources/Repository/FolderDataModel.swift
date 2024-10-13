@@ -23,8 +23,12 @@ public struct FolderDataModel: Identifiable, Sendable {
         self.numberOfWords = newNumber
     }
     
+    public mutating func increaseNumberOfWordsByOne() {
+        self.numberOfWords += 1
+    }
+    
     public init(
-        id: String = UUID().uuidString,
+        id: String,
         name: String,
         numberOfWords: Int
     ) {
@@ -41,5 +45,7 @@ extension FolderDataModel: Equatable, Hashable  {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.id)
+        hasher.combine(self.name)
+        hasher.combine(self.numberOfWords)
     }
 }

@@ -24,9 +24,14 @@ actor LocalRepository: FolderModelLocalRepositoryProtocol {
         // safe cashed changes in a thread safe manner
     }
     
-    func createEmptyFolder(with name: String) async throws {
-        let folderModel = FolderDataModel(name: name, numberOfWords: 0)
+    func createEmptyFolder(with name: String, uuid: String) async throws {
+        let folderModel = FolderDataModel(
+            id: uuid,
+            name: name,
+            numberOfWords: 0
+        )
         data[folderModel] = .some([])
+        print(folderModel.id)
     }
     
     func fetchFolders() async throws -> [FolderDataModel] {
@@ -64,11 +69,6 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
         completionPercentage: UInt8,
         pngImageData: Data?
     ) async throws {
-        let folderKey = data.keys.first { $0.id == folderID }
-        guard let folderKey else {
-            throw LocalRepositoryError.keyDoseNotExist
-        }
-        
         let newLexicalUnit = LexicalUnitDataModel(
             uuid: UUID().uuidString,
             folderID: folderID,
@@ -77,8 +77,16 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
             completionPercentage: completionPercentage,
             pngImageData: pngImageData
         )
+        guard let oldKey = data.keys.first(where: { $0.id == folderID }) else {
+            throw LocalRepositoryError.keyDoseNotExist
+        }
         
-        data[folderKey]?.append(newLexicalUnit)
+        var newKey = oldKey
+        newKey.increaseNumberOfWordsByOne()
+        
+        data.changeKey(from: oldKey, to: newKey)
+        
+        data[newKey]?.append(newLexicalUnit)
     }
     
     func fetchLexicalUnits(with folderID: FolderID) async throws -> [LexicalUnitDataModel] {
@@ -124,4 +132,11 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
 
 enum LocalRepositoryError: Error {
     case keyDoseNotExist
+}
+
+private extension Dictionary {
+    mutating func changeKey(from: Key, to: Key) {
+        self[to] = self[from]
+        self[from] = .none
+    }
 }

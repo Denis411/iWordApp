@@ -10,6 +10,7 @@
 
 import Combine
 import Repository
+import Foundation
 
 final class FolderScreenViewModel: ObservableObject {
     private let router: RouterProtocol
@@ -39,11 +40,20 @@ final class FolderScreenViewModel: ObservableObject {
     }
     
     func addFolder(with name: String) {
-        let newFolderModel = FolderDataModel(name: name, numberOfWords: 0)
+        let folderUUID = UUID().uuidString
+        print(folderUUID)
+        let newFolderModel = FolderDataModel(
+            id: folderUUID,
+            name: name,
+            numberOfWords: 0
+        )
         folderModel.addFolder(newFolderModel)
         Task(priority: .utility) {
             do {
-                try await localRepository.createEmptyFolder(with: name)
+                try await localRepository.createEmptyFolder(
+                    with: name,
+                    uuid: folderUUID
+                )
             } catch {
                 // handle error
             }
@@ -91,6 +101,7 @@ final class FolderScreenViewModel: ObservableObject {
     }
     
     func openFolderContent(folderID: String) {
+        print(folderID)
         Task(priority: .userInitiated) {
             let lexicalUnits = try? await localRepository.fetchLexicalUnits(with: folderID)
             await router.navigateTo(
@@ -99,6 +110,21 @@ final class FolderScreenViewModel: ObservableObject {
                     folderID: folderID
                 )
             )
+        }
+    }
+    
+    func refetchData() {
+        Task {
+            // show spinner
+            do {
+                let listOfFolders = try await localRepository.fetchFolders()
+                await MainActor.run {
+                    folderModel.updateListOfFolders(listOfFolders)
+                }
+            } catch {
+            // show alert
+            }
+            // hide spinner
         }
     }
 }

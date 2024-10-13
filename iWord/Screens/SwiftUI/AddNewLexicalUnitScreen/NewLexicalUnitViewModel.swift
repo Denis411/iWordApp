@@ -34,7 +34,8 @@ final class NewLexicalUnitViewModel: ObservableObject {
     }
     
     func saveLexicalUnit() {
-        guard originalLexicalUnit != "", translation != "" else {
+        guard originalLexicalUnit != "",
+                translation != "" else {
             // show alert
             return
         }

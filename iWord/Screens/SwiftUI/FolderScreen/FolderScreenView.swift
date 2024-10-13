@@ -30,6 +30,9 @@ struct FolderScreenView: View {
                 )
                 .offset(x: -Self.addButtonOffset)
         }
+        .onAppear{
+            folderScreenViewModel.refetchData()
+        }
         .alert(
             "Are you sure you want to delete the folder?",
             isPresented: $isDeleteAlertShown
