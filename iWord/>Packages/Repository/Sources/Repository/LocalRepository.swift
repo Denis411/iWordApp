@@ -13,7 +13,7 @@ import Foundation
 // MARK: - I should have created a separated models for saving data in the DB
 // Базы данных нет, но вы держитесь
 actor LocalRepository: FolderModelLocalRepositoryProtocol {
-    private var data: [FolderDataModel: [LexicalUnitDataModel]]
+    internal var data: [FolderDataModel: [LexicalUnitDataModel]]
     
     init() {
         // load data from a real DB
@@ -96,7 +96,9 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
         return lexicalUnits ?? []
     }
     
-    func deleteLexicalUnit(with uuid: String, with folderID: String) async throws {
+    typealias StringUUID = String
+    typealias FolderID = String
+    func deleteLexicalUnit(with uuid: StringUUID, with folderID: FolderID) async throws {
         guard let folderKey = data.keys.first(where: { $0.id == folderID }) else {
             throw LocalRepositoryError.keyDoseNotExist
         }
