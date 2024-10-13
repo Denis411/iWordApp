@@ -18,7 +18,7 @@ typealias FolderID = String
 actor LocalRepository: FolderModelLocalRepositoryProtocol {
     internal var data: [FolderDataModel: [LexicalUnitDataModel]]
     
-    init() {
+    internal init() {
         // load data from a real DB
         self.data = [:]
     }

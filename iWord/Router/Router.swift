@@ -17,25 +17,25 @@ import SwiftUI
 }
 
 final class Router: ObservableObject {
-    private let screenFactory: ScreenFactory
+    private weak var screenFactory: ScreenFactory?
     @Published var path: NavigationPath = NavigationPath()
     
-    init(screenFactory: ScreenFactory) {
-        self.screenFactory = screenFactory
-    }
     // Builds the views
     @ViewBuilder
     func view(for route: Route) -> some View {
         switch route {
         case .folderContentView(let folderID):
-            screenFactory.createFolderContentScreen(with: folderID)
+            screenFactory?.createFolderContentScreen(with: folderID)
         case .newLexicalUnitView:
-            screenFactory.createAddNewLexicalUnitScreen()
+            screenFactory?.createAddNewLexicalUnitScreen()
         case .cardExerciseView(let listOfLexicalUnits):
-            screenFactory.createCardExerciseScreen(with: listOfLexicalUnits)
+            screenFactory?.createCardExerciseScreen(with: listOfLexicalUnits)
         }
     }
     
+    func setScreenFactory(_ factory: ScreenFactory) {
+        self.screenFactory = factory
+    }
 }
 
 extension Router: RouterProtocol {

@@ -9,16 +9,21 @@
 // University website: https://tambovstateuniversity.org
 
 import SwiftUI
+import Repository
 
 @main
 struct iWordApp: App {
+    // Create DI
     private let router: Router
     private let screenFactory: ScreenFactory
+    private let localRepository: LocalRepositoryProtocol
     
     init() {
-        self.screenFactory = ScreenFactory()
-        self.router = Router(screenFactory: screenFactory)
-        screenFactory.setRouter(router: router)
+        self.router = Router()
+        self.localRepository = LocalRepositoryFactory.create()
+        self.screenFactory = ScreenFactory(router: router, localRepository: localRepository)
+        
+        self.router.setScreenFactory(screenFactory)
     }
     
     var body: some Scene {

@@ -18,16 +18,18 @@ final class ScreenFactory {
     private var newLexicalUnitViewModel: NewLexicalUnitViewModel?
     private var cardExerciseViewModel: CardExerciseViewModel?
     
-    private var router: Router?
+    private let router: Router
+    private let localRepository: LocalRepositoryProtocol
     
-    func setRouter(router: Router?) {
+    init(
+        router: Router,
+        localRepository: LocalRepositoryProtocol
+    ) {
         self.router = router
+        self.localRepository = localRepository
     }
     
     func createFolderScreen() -> some View {
-        guard let router else {
-            fatalError()
-        }
         folderScreenViewModel = FolderScreenViewModel(router: router)
         return RouterRootView(router: router) {
             FolderScreenView(folderScreenViewModel: self.folderScreenViewModel!)
@@ -37,7 +39,7 @@ final class ScreenFactory {
     func createFolderContentScreen(with folderID: String) -> some View {
         self.folderContentViewModel = FolderContentViewModel(
             with: folderID,
-            router: router!
+            router: router
         )
         return FolderContentSwiftUIContainerView(folderContentViewModel: folderContentViewModel!)
     }
