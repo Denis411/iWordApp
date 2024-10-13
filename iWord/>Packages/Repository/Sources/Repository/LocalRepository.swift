@@ -10,9 +10,6 @@
 
 import Foundation
 
-typealias StringUUID = String
-typealias FolderID = String
-
 // MARK: - I should have created a separated models for saving data in the DB
 // Базы данных нет, но вы держитесь
 actor LocalRepository: FolderModelLocalRepositoryProtocol {
@@ -90,7 +87,6 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
         }
         
         guard let dictionaryKey else {
-            assertionFailure()
             throw LocalRepositoryError.keyDoseNotExist
         }
         
@@ -99,7 +95,7 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
         return lexicalUnits ?? []
     }
     
-    func deleteLexicalUnit(with uuid: StringUUID, with folderID: FolderID) async throws {
+    func deleteLexicalUnit(with uuid: lexicalUnitUUID, with folderID: FolderID) async throws {
         guard let folderKey = data.keys.first(where: { $0.id == folderID }) else {
             throw LocalRepositoryError.keyDoseNotExist
         }
@@ -109,13 +105,13 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
         }
         
         oldValue.removeAll(where: { lexicalUnitModel in
-            lexicalUnitModel.folderID == folderID
+            lexicalUnitModel.uuid == uuid
         })
         
         data.updateValue(oldValue, forKey: folderKey)
     }
     
-    func updateLexicalUnit(with uuid: StringUUID, with folderID: FolderID, newValue: LexicalUnitDataModel) async throws {
+    func updateLexicalUnit(with uuid: lexicalUnitUUID, with folderID: FolderID, newValue: LexicalUnitDataModel) async throws {
         
         guard let dictionaryKey = data.keys.first(where: { $0.id == folderID }) else {
             throw LocalRepositoryError.keyDoseNotExist

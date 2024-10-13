@@ -10,24 +10,27 @@
 
 import Foundation
 
+public typealias lexicalUnitUUID = String
+public typealias FolderID = String
+
 public typealias LocalRepositoryProtocol = FolderModelLocalRepositoryProtocol & LexicalUnitModelLocalRepositoryProtocol
 
 public protocol FolderModelLocalRepositoryProtocol {
     func createEmptyFolder(with name: String) async throws 
     func fetchFolders() async throws -> [FolderDataModel]
-    func deleteFolder(uuid: String) async throws
+    func deleteFolder(uuid: FolderID) async throws
     func updateFolder(folderModel: FolderDataModel) async throws
 }
 
 public protocol LexicalUnitModelLocalRepositoryProtocol {
     func saveLexicalUnit(
-        folderID: String,
+        folderID: FolderID,
         originalWord: String,
         mainTranslation: String,
         completionPercentage: UInt8,
         pngImageData: Data?
     ) async throws
-    func fetchLexicalUnits(with folderID: String) async throws -> [LexicalUnitDataModel]
-    func deleteLexicalUnit(with uuid: String, with folderID: String) async throws
-    func updateLexicalUnit(with uuid: String, with folderID: String, newValue: LexicalUnitDataModel) async throws
+    func fetchLexicalUnits(with folderID: FolderID) async throws -> [LexicalUnitDataModel]
+    func deleteLexicalUnit(with uuid: lexicalUnitUUID, with folderID: FolderID) async throws
+    func updateLexicalUnit(with uuid: lexicalUnitUUID, with folderID: FolderID, newValue: LexicalUnitDataModel) async throws
 }
