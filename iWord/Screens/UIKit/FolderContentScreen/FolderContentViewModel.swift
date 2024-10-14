@@ -15,11 +15,10 @@ final class FolderContentViewModel: ObservableObject {
     private let router: RouterProtocol
     private let localRepository: LexicalUnitModelLocalRepositoryProtocol
     private let folderID: String
-    @Published private(set) var listOfLexicalUnits: [LexicalUnitDataModel]
+    @Published private(set) var listOfLexicalUnits: [LexicalUnitDataModel] = []
     @Published private(set) var isEmptyFolderAlertPresented: Bool = false
     
     init(
-        listOfLexicalUnits: [LexicalUnitDataModel],
         localRepository: LocalRepositoryProtocol,
         folderID: String,
         router: Router
@@ -27,8 +26,9 @@ final class FolderContentViewModel: ObservableObject {
         self.router = router
         self.localRepository = localRepository
         // load data for folder id
-        self.listOfLexicalUnits = listOfLexicalUnits
         self.folderID = folderID
+        
+        refreshData()
     }
     
     func deleteLexicalUnit(at indexPath: IndexPath) {
@@ -64,5 +64,20 @@ final class FolderContentViewModel: ObservableObject {
     
     func setEmptyFolderAlert(isPresented: Bool) {
         self.isEmptyFolderAlertPresented = isPresented
+    }
+    
+    func refreshData() {
+        Task(priority: .userInitiated) {
+            // Show spinner
+            do {
+                let updatedListOfLexicalUnits = try await localRepository.fetchLexicalUnits(with: folderID)
+                await MainActor.run {
+                    self.listOfLexicalUnits = updatedListOfLexicalUnits
+                }
+            } catch {
+                // show error
+            }
+            // hide spinner
+        }
     }
 }

@@ -22,6 +22,9 @@ struct FolderContentSwiftUIContainerView: View {
     
     var body: some View {
         FolderContentViewControllerRepresentable(folderContentViewModel: folderContentViewModel)
+            .onAppear {
+                folderContentViewModel.refreshData()
+            }
             .alert(
                 "You do not have lexical units in this folder to exercise with.",
                 isPresented: Binding(

@@ -43,7 +43,6 @@ final class ScreenFactory {
     
     func createFolderContentScreen(listOfLexicalUnits: [LexicalUnitDataModel], folderID: String) -> some View {
         self.folderContentViewModel = FolderContentViewModel(
-            listOfLexicalUnits: listOfLexicalUnits,
             localRepository: localRepository,
             folderID: folderID,
             router: router

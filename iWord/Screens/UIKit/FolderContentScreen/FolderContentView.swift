@@ -162,7 +162,6 @@ extension FolderContentView {
     router.setScreenFactory(screenFactory)
     
     let folderVM = FolderContentViewModel(
-        listOfLexicalUnits: [],
         localRepository: repo,
         folderID: "",
         router: router

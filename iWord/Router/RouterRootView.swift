@@ -11,14 +11,14 @@
 import SwiftUI
 
 struct RouterRootView<Content: View>: View {
-    @StateObject private var router: Router
+    @ObservedObject private var router: Router
     private let rootView: Content
     
     init(
         router: Router,
         @ViewBuilder rootView: @escaping () -> Content
     ) {
-        _router = StateObject(wrappedValue: router)
+        self.router = router
         self.rootView = rootView()
     }
     
