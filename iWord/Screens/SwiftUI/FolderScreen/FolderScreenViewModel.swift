@@ -16,24 +16,22 @@ final class FolderScreenViewModel: ObservableObject {
     private let router: RouterProtocol
     private let localRepository: LocalRepositoryProtocol
     
-    @Published private(set) var folderModel: FolderModel
+    @Published private(set) var folderModel: FolderModel? = nil
     private(set) var folderToDelete: FolderDataModel? = nil
     private(set) var folderToEdit: FolderDataModel? = nil
     
     init(
         router: RouterProtocol,
-        localRepository: LocalRepositoryProtocol,
-        initialFolders: [FolderDataModel]
+        localRepository: LocalRepositoryProtocol
     ) {
         self.router = router
         self.localRepository = localRepository
-        self.folderModel = FolderModel(listOfFolders: initialFolders)
         
         Task(priority: .userInitiated) {
             // show spinner
             do {
                 let previouslySavedFolders = try await self.localRepository.fetchFolders()
-                folderModel.updateListOfFolders(previouslySavedFolders)
+                folderModel = FolderModel(listOfFolders: previouslySavedFolders)
             } catch { }
             // hide spinner
         }
@@ -47,7 +45,7 @@ final class FolderScreenViewModel: ObservableObject {
             name: name,
             numberOfWords: 0
         )
-        folderModel.addFolder(newFolderModel)
+        folderModel?.addFolder(newFolderModel)
         Task(priority: .utility) {
             do {
                 try await localRepository.createEmptyFolder(
@@ -71,8 +69,15 @@ final class FolderScreenViewModel: ObservableObject {
             assertionFailure()
             return
         }
-        folderModel.deleteFolder(folderToDelete)
-        self.folderToDelete = nil
+        folderModel?.deleteFolder(folderToDelete)
+        Task {
+            do {
+                try await localRepository.deleteFolder(uuid: folderToDelete.id)
+            } catch {
+                // show alert
+            }
+            self.folderToDelete = nil
+        }
     }
     
     // set folder before deleting
@@ -88,7 +93,7 @@ final class FolderScreenViewModel: ObservableObject {
         }
         
         // FIXME: - You do not need to use a new name here, just update the folderToEdit
-        self.folderModel.editFolderName(model: folderToEdit, newName: name)
+        self.folderModel?.editFolderName(model: folderToEdit, newName: name)
         
         Task(priority: .utility) {
             do {
@@ -119,7 +124,7 @@ final class FolderScreenViewModel: ObservableObject {
             do {
                 let listOfFolders = try await localRepository.fetchFolders()
                 await MainActor.run {
-                    folderModel.updateListOfFolders(listOfFolders)
+                    folderModel?.updateListOfFolders(listOfFolders)
                 }
             } catch {
             // show alert

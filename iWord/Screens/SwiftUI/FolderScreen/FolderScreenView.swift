@@ -21,7 +21,7 @@ struct FolderScreenView: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             createContentView()
-                .animation(.easeInOut, value: folderScreenViewModel.folderModel.listOfFolders)
+                .animation(.easeInOut, value: folderScreenViewModel.folderModel?.listOfFolders)
                 .scrollIndicators(.never)
             AddButton(action: isNewFolderAlertPresented = true)
                 .frame(
@@ -72,7 +72,7 @@ private extension FolderScreenView {
     @ViewBuilder
     func createContentView() -> some View {
             List {
-                ForEach(folderScreenViewModel.folderModel.listOfFolders) { folderModel in
+                ForEach(folderScreenViewModel.folderModel?.listOfFolders ?? []) { folderModel in
                     FolderCell(
                         folderModel,
                         editAction: editFolder,
@@ -87,7 +87,8 @@ private extension FolderScreenView {
             }
             .listStyle(.inset)
         .overlay {
-            if folderScreenViewModel.folderModel.listOfFolders.isEmpty {
+            if let list = folderScreenViewModel.folderModel?.listOfFolders,
+               list.isEmpty {
                 Text("Press the plus button to create a folder")
                     .multilineTextAlignment(.center)
                     .font(.system(size: 20))
@@ -128,8 +129,7 @@ fileprivate extension FolderScreenView {
     
     let viewModel: FolderScreenViewModel = .init(
         router: router,
-        localRepository: repo,
-        initialFolders: []
+        localRepository: repo
     )
 
     return FolderScreenView(folderScreenViewModel: viewModel)
