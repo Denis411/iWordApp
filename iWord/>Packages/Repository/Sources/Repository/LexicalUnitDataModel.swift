@@ -41,6 +41,10 @@ public struct LexicalUnitDataModel: Hashable, Sendable {
     }
     
     public mutating func decreasePercentage(by percent: UInt8) {
+        guard completionPercentage > 0 else {
+            // unsigned Ints can be overflowed
+            return
+        }
         completionPercentage -= percent
     }
 }
