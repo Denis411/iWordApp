@@ -23,8 +23,12 @@ import Foundation
         )
         
         let previouslySaveLexicalUnit = try await repository.data[#require(folder)]?.first
+        let previousFolderID = try #require(previouslySaveLexicalUnit?.folderID)
+        let defaultFolderID = try #require(folder?.id)
         
-        #expect(try previouslySaveLexicalUnit?.folderID == #require(folder?.id))
+        #expect(previousFolderID == defaultFolderID)
+        let updatedFolder = await repository.data.keys.first(where: { $0.name == folderName} )
+        #expect(updatedFolder?.numberOfWords == 1)
     }
     
     @Test func testDeletingLexicalUnit() async throws {

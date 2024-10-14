@@ -45,7 +45,5 @@ extension FolderDataModel: Equatable, Hashable  {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.id)
-        hasher.combine(self.name)
-        hasher.combine(self.numberOfWords)
     }
 }

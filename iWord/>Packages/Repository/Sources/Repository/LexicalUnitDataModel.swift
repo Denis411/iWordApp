@@ -47,7 +47,12 @@ public struct LexicalUnitDataModel: Hashable, Sendable {
 
 extension LexicalUnitDataModel: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.uuid == rhs.uuid
+        lhs.uuid == rhs.uuid &&
+        lhs.folderID == rhs.folderID &&
+        lhs.originalWord == rhs.originalWord &&
+        lhs.mainTranslation == rhs.mainTranslation &&
+        lhs.completionPercentage == rhs.completionPercentage &&
+        lhs.pngImageData == rhs.pngImageData
     }
 }
 

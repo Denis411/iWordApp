@@ -31,7 +31,6 @@ actor LocalRepository: FolderModelLocalRepositoryProtocol {
             numberOfWords: 0
         )
         data[folderModel] = .some([])
-        print(folderModel.id)
     }
     
     func fetchFolders() async throws -> [FolderDataModel] {
@@ -81,12 +80,15 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
             throw LocalRepositoryError.keyDoseNotExist
         }
         
+        let oldValue = data[oldKey]
+        var newValue = oldValue
+        newValue?.append(newLexicalUnit)
+        
         var newKey = oldKey
         newKey.increaseNumberOfWordsByOne()
         
-        data.changeKey(from: oldKey, to: newKey)
-        
-        data[newKey]?.append(newLexicalUnit)
+        data[oldKey] = nil
+        data[newKey] = newValue
     }
     
     func fetchLexicalUnits(with folderID: FolderID) async throws -> [LexicalUnitDataModel] {
@@ -132,11 +134,4 @@ extension LocalRepository: LexicalUnitModelLocalRepositoryProtocol {
 
 enum LocalRepositoryError: Error {
     case keyDoseNotExist
-}
-
-private extension Dictionary {
-    mutating func changeKey(from: Key, to: Key) {
-        self[to] = self[from]
-        self[from] = .none
-    }
 }
