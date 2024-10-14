@@ -32,12 +32,15 @@ final class FolderContentViewModel: ObservableObject {
     }
     
     func deleteLexicalUnit(at indexPath: IndexPath) {
-        listOfLexicalUnits.remove(at: indexPath.row)
         Task(priority: .utility) {
             try? await localRepository.deleteLexicalUnit(
                 with: listOfLexicalUnits[indexPath.row].uuid,
                 with: folderID
             )
+            
+            await MainActor.run {
+                listOfLexicalUnits.remove(at: indexPath.row)
+            }
         }
     }
     
