@@ -38,7 +38,7 @@ final class CardExerciseViewModel: ObservableObject {
             return
         }
         
-        updateCurrentLexicalUnit()
+        updateCurrentLexicalUnitAfterIncreasing()
         
         currentIndex += 1
         
@@ -58,7 +58,7 @@ final class CardExerciseViewModel: ObservableObject {
             return
         }
         
-        updateCurrentLexicalUnit()
+        updateCurrentLexicalUnitAfterDecreasing()
         
         currentIndex += 1
         
@@ -69,9 +69,21 @@ final class CardExerciseViewModel: ObservableObject {
         currentModel = listOfLexicalUnits[currentIndex]
     }
     
-    private func updateCurrentLexicalUnit() {
+    private func updateCurrentLexicalUnitAfterIncreasing() {
+        var currentLexicalUnit = listOfLexicalUnits[currentIndex]
+        currentLexicalUnit.increasePercentage(by: 1)
+        persistUpdatedLexicalUnit(currentLexicalUnit)
+        currentIndex += 1
+    }
+    
+    private func updateCurrentLexicalUnitAfterDecreasing() {
         var currentLexicalUnit = listOfLexicalUnits[currentIndex]
         currentLexicalUnit.decreasePercentage(by: 1)
+        persistUpdatedLexicalUnit(currentLexicalUnit)
+        currentIndex += 1
+    }
+    
+    private func persistUpdatedLexicalUnit(_ currentLexicalUnit: LexicalUnitDataModel) {
         Task {
             do {
                 try await localRepository.updateLexicalUnit(
@@ -84,7 +96,6 @@ final class CardExerciseViewModel: ObservableObject {
                 assertionFailure()
             }
         }
-        currentIndex += 1
     }
     
     func closeExercise() {
