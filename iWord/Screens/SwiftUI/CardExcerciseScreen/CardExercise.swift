@@ -66,8 +66,8 @@ struct CardExerciseView: View {
             
             VStack {
                 CartView(
-                    initialText: "Cat",
-                    secondaryText: "KOT",
+                    initialText: cardExerciseViewModel.currentModel.originalWord,
+                    secondaryText: cardExerciseViewModel.currentModel.mainTranslation,
                     pngData: cardExerciseViewModel.currentModel.pngImageData,
                     isInHintState: isInHintState
                 )
@@ -142,5 +142,12 @@ import Repository
 
 #Preview {
     let listOfLexicalUnits: [LexicalUnitDataModel] = [.previewMock(), .previewMock()]
-    CardExerciseView(cardExerciseViewModel: .init(with: listOfLexicalUnits))
+    let localRepository = LocalRepositoryFactory.create()
+    
+    CardExerciseView(
+        cardExerciseViewModel: .init(
+            with: listOfLexicalUnits,
+            localRepository: localRepository
+        )
+    )
 }

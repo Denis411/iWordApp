@@ -61,7 +61,10 @@ final class ScreenFactory {
     }
     
     func createCardExerciseScreen(with listOfLexicalUnits: [LexicalUnitDataModel]) -> some View {
-        self.cardExerciseViewModel = CardExerciseViewModel(with: listOfLexicalUnits)
+        self.cardExerciseViewModel = CardExerciseViewModel(
+            with: listOfLexicalUnits,
+            localRepository: localRepository
+        )
         return CardExerciseView(cardExerciseViewModel: cardExerciseViewModel!)
     }
 }
