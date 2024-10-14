@@ -10,6 +10,7 @@
 
 import UIKit
 import Combine
+import Repository
 
 // Making binding in FolderContentViewControllerRepresentable might look more appropriate
 // but I want to keep it here in case I have to control the lifecycle of the VC without any extra closures
@@ -29,25 +30,22 @@ final class FolderContentViewController: UIViewController {
     }
     
     override func loadView() {
-        view = FolderContentView(
-            listOfUnits: folderContentViewModel.listOfLexicalUnits,
-            startExerciseAction: folderContentViewModel.openCardExerciseScreen,
-            addNewLexicalUnitAction: folderContentViewModel.openAddNewLexicalUnitScreen,
-            deleteLexicalUnitAction: folderContentViewModel.deleteLexicalUnit(at:),
-            didTapOnLexicalUnitAction: folderContentViewModel.didTapLexicalUnit(at:)
-        )
-        bind()
-        // initial update
-        internalView.updateListOfLexicalUnits(folderContentViewModel.listOfLexicalUnits)
+        view = FolderContentView()
     }
     
-    private func bind() {
-        folderContentViewModel
-            .$listOfLexicalUnits
-            .receive(on: DispatchQueue.main)
-            .sink { newListPublisher in
-                self.internalView.updateListOfLexicalUnits(newListPublisher)
-            }
-            .store(in: &disposedBag)
+    func update(
+        listOfUnits: [LexicalUnitDataModel],
+        startExerciseAction: @escaping () -> Void,
+        addNewLexicalUnitAction: @escaping () -> Void,
+        deleteLexicalUnitAction: @escaping (IndexPath) -> Void,
+        didTapOnLexicalUnitAction: @escaping (IndexPath) -> Void
+    ) {
+        internalView.updateListOfLexicalUnits(listOfUnits)
+        internalView.setActions(
+            startExerciseAction: startExerciseAction,
+            addNewLexicalUnitAction: addNewLexicalUnitAction,
+            deleteLexicalUnitAction: deleteLexicalUnitAction,
+            didTapOnLexicalUnitAction: didTapOnLexicalUnitAction
+        )
     }
 }

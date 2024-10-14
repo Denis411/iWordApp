@@ -49,11 +49,25 @@ private struct FolderContentViewControllerRepresentable: UIViewControllerReprese
     }
     
     func makeUIViewController(context: Context) -> FolderContentViewController {
-        FolderContentViewController(folderContentViewModel: folderContentViewModel)
+        let vc = FolderContentViewController(folderContentViewModel: folderContentViewModel)
+        updateVCData(vc)
+        return vc
     }
     
     func updateUIViewController(_ uiViewController: FolderContentViewController, context: Context) {
-        print("Updated")
+        updateVCData(uiViewController)
+    }
+    
+    // Этот жесткий костыль связан с тем что у Apple есть баг в NavigationStack
+    // при возврате на предедущий экран этот экран перегружаеться
+    func updateVCData(_ vc: FolderContentViewController) {
+        vc.update(
+            listOfUnits: folderContentViewModel.listOfLexicalUnits,
+            startExerciseAction: folderContentViewModel.openCardExerciseScreen,
+            addNewLexicalUnitAction: folderContentViewModel.openAddNewLexicalUnitScreen,
+            deleteLexicalUnitAction: folderContentViewModel.deleteLexicalUnit(at:),
+            didTapOnLexicalUnitAction: folderContentViewModel.didTapLexicalUnit(at:)
+        )
     }
 }
 

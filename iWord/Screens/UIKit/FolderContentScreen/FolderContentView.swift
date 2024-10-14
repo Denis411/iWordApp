@@ -13,12 +13,12 @@ import SnapKit
 import Repository
 
 final class FolderContentView: UIView {
-    private var listOfUnits: [LexicalUnitDataModel]
+    private var listOfUnits: [LexicalUnitDataModel] = []
     private let tableView = UITableView()
-    private var startExerciseAction: () -> Void
-    private var addNewLexicalUnitAction: () -> Void
-    private var deleteLexicalUnitAction: (IndexPath) -> Void
-    private var didTapOnLexicalUnitAction: (IndexPath) -> Void
+    private var startExerciseAction: (() -> Void)?
+    private var addNewLexicalUnitAction: (() -> Void)?
+    private var deleteLexicalUnitAction: ((IndexPath) -> Void)?
+    private var didTapOnLexicalUnitAction: ((IndexPath) -> Void)?
     
     private let startExerciseButton: UIButton = {
         let button = UIButton()
@@ -56,19 +56,7 @@ final class FolderContentView: UIView {
         }
     }
     
-    init(
-        listOfUnits: [LexicalUnitDataModel],
-        startExerciseAction: @escaping () -> Void,
-        addNewLexicalUnitAction: @escaping () -> Void,
-        deleteLexicalUnitAction: @escaping (IndexPath) -> Void,
-        didTapOnLexicalUnitAction: @escaping (IndexPath) -> Void
-    ) {
-        self.listOfUnits = listOfUnits
-        self.startExerciseAction = startExerciseAction
-        self.addNewLexicalUnitAction = addNewLexicalUnitAction
-        self.deleteLexicalUnitAction = deleteLexicalUnitAction
-        self.didTapOnLexicalUnitAction = didTapOnLexicalUnitAction
-        
+    init() {
         super.init(frame: .zero)
         tableView.delegate = self
         tableView.dataSource = self
@@ -107,12 +95,24 @@ final class FolderContentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setActions(
+        startExerciseAction: @escaping () -> Void,
+        addNewLexicalUnitAction: @escaping () -> Void,
+        deleteLexicalUnitAction: @escaping (IndexPath) -> Void,
+        didTapOnLexicalUnitAction: @escaping (IndexPath) -> Void
+    ) {
+        self.startExerciseAction = startExerciseAction
+        self.addNewLexicalUnitAction = addNewLexicalUnitAction
+        self.deleteLexicalUnitAction = deleteLexicalUnitAction
+        self.didTapOnLexicalUnitAction = didTapOnLexicalUnitAction
+    }
+    
     @objc func startExercise() {
-        self.startExerciseAction()
+        self.startExerciseAction?()
     }
     
     @objc func addButtonAction() {
-        addNewLexicalUnitAction()
+        addNewLexicalUnitAction?()
     }
     
     func updateListOfLexicalUnits(_ newList: [LexicalUnitDataModel]) {
@@ -138,7 +138,7 @@ extension FolderContentView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            deleteLexicalUnitAction(indexPath)
+            deleteLexicalUnitAction?(indexPath)
         }
     }
     
@@ -147,7 +147,7 @@ extension FolderContentView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, performPrimaryActionForRowAt indexPath: IndexPath) {
-        didTapOnLexicalUnitAction(indexPath)
+        didTapOnLexicalUnitAction?(indexPath)
     }
 }
 
