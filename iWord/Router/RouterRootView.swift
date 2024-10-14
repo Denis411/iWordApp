@@ -29,6 +29,5 @@ struct RouterRootView<Content: View>: View {
                     router.view(for: route)
                 }
         }
-        .environmentObject(router)
     }
 }
