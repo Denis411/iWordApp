@@ -10,7 +10,7 @@
 
 import Foundation
 
-// MARK: - I should have created a separated models for saving data in the DB
+// MARK: - I should have created separated models for saving data to a DB
 // Базы данных нет, но вы держитесь
 actor LocalRepository: FolderModelLocalRepositoryProtocol {
     internal var data: [FolderDataModel: [LexicalUnitDataModel]]
